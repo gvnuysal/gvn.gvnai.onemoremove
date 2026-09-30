@@ -1,0 +1,2 @@
+{ "id": "l09_misleading_gates", "name": "Aldatıcı Kapılar", "revision": 2, "parMoves": 10,
+  "map": ["..Px#", ".##x#", "...x.", "...#G", "#...."] }

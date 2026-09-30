@@ -1,2 +1,0 @@
-{ "id": "l08_gate_and_echo", "name": "Kapı ve Yankı", "revision": 1, "parMoves": 13,
-  "map": ["PEG.#", ".#xo#", ".....", "..x..", "....."] }

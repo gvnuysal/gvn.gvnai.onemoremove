@@ -26,6 +26,11 @@
 crashlytics-buildid.txt
 sysinfo.txt
 
+# .NET tools outside Unity (Tools/*) keep their project files
+!/Tools/**/*.csproj
+/Tools/**/bin/
+/Tools/**/obj/
+
 # IDE
 .idea/
 .vs/

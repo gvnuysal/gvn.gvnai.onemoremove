@@ -9,7 +9,7 @@ The dependency direction points inward only: `Presentation → Session → Core`
 
 | Assembly | Responsibility | Unity dependency |
 |---|---|---|
-| `OneMoreMove.Core` | `RulesEngine.TryMove`, `BoardState`, `LevelDefinition`, `LevelValidator`, `BfsSolver`, `AsciiLevelParser` | none (`noEngineReferences`) |
+| `OneMoreMove.Core` | `RulesEngine.TryMove`, `BoardState`, `LevelDefinition`, `LevelValidator`, `BfsSolver`, `LevelAnalyzer`, `AsciiLevelParser` | none (`noEngineReferences`) |
 | `OneMoreMove.Session` | `GameSession` (undo, hint flag), `GameCoordinator`, `ProgressService`, `StarRating`, `HintService`, `ISaveStore` | none |
 | `OneMoreMove.Persistence` | Versioned + checksummed JSON save, migrations, atomic write + backup, ordered background queue, `LevelJson` | none |
 | `OneMoreMove.Content` | `LevelAsset` / `LevelCatalog` ScriptableObjects | yes |
@@ -38,6 +38,10 @@ In the editor, use the **One More Move** menu for the same actions. Selecting a 
 Arrows/WASD move, Space/. wait (the d-pad centre button), Z/Backspace undo, R restart, H hint, Esc menu/back.
 
 ## Content workflow
+
+Level design tool (plain .NET, runs the game's own Core code without Unity): `Tools/LevelLab`.
+`dotnet run --project Tools/LevelLab -- analyze` reports every seed level; see [docs/content-plan.md](docs/content-plan.md)
+for the 30-level plan, the metrics and the generator.
 
 Seed files are `Content/LevelSource/*.json`. Each one uses either explicit coordinates or a `map` field (`P` player, `E` echo, `G` goal, `#` wall, `o/x` open/closed gate, `O/X` gate+goal).
 Setup does not overwrite existing assets. To overwrite, use `-overwriteLevels` or the "Reimport Seed Levels" menu.
