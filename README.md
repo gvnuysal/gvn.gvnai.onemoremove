@@ -47,6 +47,35 @@ Arrows/WASD move, Space/. wait (the d-pad centre button), Z/Backspace undo, R re
 Touch: swipe on the board to move, tap your own piece to wait, or use the on-screen d-pad. Phones play in portrait;
 `ScreenLayout` keeps the UI inside the safe area and fits the board between the HUD rows.
 
+## Game server (C#)
+
+`Server/OneMoreMove.Server` is an ASP.NET Core (.NET 10) minimal API that compiles the game's own Core, Session and
+Persistence sources, so it verifies runs with the same `RulesEngine`, merges progress with the same `ProgressMerger`
+and speaks the same wire format (`CloudDtos`).
+
+| Endpoint | Purpose |
+|---|---|
+| `POST /api/v1/accounts` | Anonymous device account (rate-limited per IP); returns id + secret (PBKDF2-hashed on the server) |
+| `POST /api/v1/sessions` | Secret → JWT access token |
+| `GET/PUT /api/v1/progress` | Cloud save: the device's progress is merged (commutative, never lowers a best) and returned |
+| `POST /api/v1/levels/{id}/runs` | Submit a run's commands; the server replays them on that level revision and ranks the replayed length |
+| `GET /api/v1/levels/{id}/leaderboard` | Top runs per level revision |
+| `GET /api/v1/level-packs[/{v}]`, `POST /api/v1/level-packs` | Versioned level packs; publishing (X-Admin-Key) proves every level with the validator and exhaustive solver |
+
+On an empty database the game's seed levels are published as pack 1. SQLite for development and tests, PostgreSQL in
+production (`Server:Database:Provider=Postgres`). Secrets come from configuration or environment variables
+(`Server__SigningKey`, `Server__AdminApiKey`).
+
+```bash
+dotnet run --project Server/OneMoreMove.Server          # http://localhost:5080 (Development settings)
+dotnet test Server/OneMoreMove.Server.Tests              # in-memory server, real HTTP, game client included
+docker build -f Server/Dockerfile -t onemoremove-server .
+```
+
+The game talks to it through `CloudSync` (offline-first: every call returns null without a connection) and
+`HttpRemoteService`. Set `GameBootstrap.serverUrl` (HTTPS) to enable cloud save and world rankings; empty keeps the
+game fully offline, which is the default.
+
 ## Accessibility
 
 - Contrast: UI text ≥ 4.5:1, focus ring and every board element ≥ 3:1 against the floor (WCAG 1.4.11); enforced by

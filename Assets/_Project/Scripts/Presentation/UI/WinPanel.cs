@@ -10,6 +10,7 @@ namespace OneMoreMove.Presentation.UI
         private readonly Label _moves;
         private readonly Label _best;
         private readonly Label _note;
+        private readonly Label _rank;
         private readonly Button _next;
         private readonly Button _replay;
 
@@ -19,6 +20,7 @@ namespace OneMoreMove.Presentation.UI
             _moves = Find<Label>(root, "win-moves");
             _best = Find<Label>(root, "win-best");
             _note = Find<Label>(root, "win-note");
+            _rank = Find<Label>(root, "win-rank");
             _next = Find<Button>(root, "next-button");
             _replay = Find<Button>(root, "replay-button");
             _next.clicked += () => NextClicked?.Invoke();
@@ -40,6 +42,14 @@ namespace OneMoreMove.Presentation.UI
             _note.text = hasNext ? string.Empty : Strings.AllLevelsComplete;
             _note.style.display = hasNext ? DisplayStyle.None : DisplayStyle.Flex;
             _next.style.display = hasNext ? DisplayStyle.Flex : DisplayStyle.None;
+            SetRanking(null);
+        }
+
+        /// <summary>The verified world ranking, filled in when the server answers; hidden while offline.</summary>
+        public void SetRanking(string text)
+        {
+            _rank.text = text ?? string.Empty;
+            _rank.style.display = string.IsNullOrEmpty(text) ? DisplayStyle.None : DisplayStyle.Flex;
         }
     }
 }

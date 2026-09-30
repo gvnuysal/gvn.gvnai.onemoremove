@@ -11,7 +11,7 @@
     <ImplicitUsings>disable</ImplicitUsings>
     <RootNamespace>OneMoreMove.LevelLab</RootNamespace>
     <InvariantGlobalization>true</InvariantGlobalization>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;CS0649</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>

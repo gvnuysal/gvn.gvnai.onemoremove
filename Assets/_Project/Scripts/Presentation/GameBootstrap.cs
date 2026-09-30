@@ -21,6 +21,9 @@ namespace OneMoreMove.Presentation
         [SerializeField] private Camera boardCamera;
         [SerializeField] private int targetFrameRate = 60;
 
+        [Tooltip("Game server root, e.g. https://api.example.com/. Empty plays fully offline (no cloud save, no leaderboards).")]
+        [SerializeField] private string serverUrl = "";
+
         private GameCoordinator _game;
         private GameplayController _gameplay;
         private InputController _input;
@@ -55,7 +58,11 @@ namespace OneMoreMove.Presentation
             boardView.SetCamera(boardCamera);
             _gameplay = new GameplayController(_game, boardView, new HintService(SolverBudget.Hint));
             _input = new InputController();
-            _app = new AppPresenter(uiDocument.rootVisualElement, _game, _gameplay, boardView, _input, new AudioService(gameObject), Quit);
+            var saveDirectory = SaveDirectoryOverride ?? Application.persistentDataPath;
+            var cloud = string.IsNullOrWhiteSpace(serverUrl)
+                ? null
+                : new CloudSync(HttpRemoteService.Create(serverUrl), new FileAccountStore(saveDirectory));
+            _app = new AppPresenter(uiDocument.rootVisualElement, _game, _gameplay, boardView, _input, new AudioService(gameObject), cloud, Quit);
             _app.Start();
         }
 

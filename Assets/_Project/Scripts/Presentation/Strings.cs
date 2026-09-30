@@ -88,6 +88,12 @@ namespace OneMoreMove.Presentation
             }
         }
 
+        /// <summary>Null when there is nothing to show (offline, or the server did not accept the run).</summary>
+        public static string Ranking(RunResult result) =>
+            result == null || !result.Accepted
+                ? null
+                : $"Dünya sıralaması: {result.Rank}. / {result.Players} oyuncu (en iyin: {result.BestMoves} hamle)";
+
         // Touch devices have no keyboard: button labels drop the shortcut hints shown in App.uxml.
         public const string MenuButtonTouch = "Menü";
         public const string UndoButtonTouch = "Geri Al";

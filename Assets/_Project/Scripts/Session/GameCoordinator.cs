@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using OneMoreMove.Core;
 
 namespace OneMoreMove.Session
@@ -177,6 +178,14 @@ namespace OneMoreMove.Session
             change(copy);
             copy.Normalize();
             Settings = copy;
+            RequestSave();
+        }
+
+        /// <summary>Folds progress from other devices (cloud sync) into local progress; nothing earned is ever lowered.</summary>
+        public void ApplyRemoteProgress(IEnumerable<ProgressRecord> remote)
+        {
+            if (remote == null) return;
+            Progress = new ProgressService(ProgressMerger.Merge(Progress.ToList(), remote));
             RequestSave();
         }
 

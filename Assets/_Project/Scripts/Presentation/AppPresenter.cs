@@ -16,6 +16,7 @@ namespace OneMoreMove.Presentation
         private readonly BoardView _board;
         private readonly InputController _input;
         private readonly AudioService _audio;
+        private readonly CloudSync _cloud;
         private readonly Action _quit;
 
         private readonly MainMenuScreen _mainMenu;
@@ -28,8 +29,9 @@ namespace OneMoreMove.Presentation
         private readonly TouchGestures _gestures;
         private readonly ScreenReaderSupport _screenReader;
 
+        /// <param name="cloud">Cloud save and leaderboards; null plays fully offline.</param>
         public AppPresenter(VisualElement root, GameCoordinator game, GameplayController gameplay, BoardView board, InputController input,
-            AudioService audio, Action quit)
+            AudioService audio, CloudSync cloud, Action quit)
         {
             _root = root ?? throw new ArgumentNullException(nameof(root));
             _game = game;
@@ -37,6 +39,7 @@ namespace OneMoreMove.Presentation
             _board = board;
             _input = input;
             _audio = audio ?? throw new ArgumentNullException(nameof(audio));
+            _cloud = cloud;
             _quit = quit;
 
             _mainMenu = new MainMenuScreen(Find("main-menu"));
@@ -64,6 +67,7 @@ namespace OneMoreMove.Presentation
             _audio.StartMusic();
             var message = Strings.LoadStatus(_game.LoadStatus) ?? Strings.ResumeDiscarded(_game.ResumeDiscardReason);
             ShowMainMenu(message);
+            SyncProgress();
         }
 
         public void Tick(float deltaSeconds)
@@ -201,6 +205,30 @@ namespace OneMoreMove.Presentation
             _win.Show();
             TextScaler.Apply(_win.Root, _game.Settings.TextScalePercent);
             UpdateInput();
+            SubmitRun(_game.Current);
+        }
+
+        /// <summary>Merges progress from other devices; silently does nothing offline.</summary>
+        private async void SyncProgress()
+        {
+            if (_cloud == null) return;
+
+            var merged = await _cloud.SyncProgressAsync(_game.Progress.ToList());
+            if (merged == null) return;
+
+            _game.ApplyRemoteProgress(merged);
+            if (_levelSelect.IsVisible) ShowLevelSelect();
+            else if (_mainMenu.IsVisible) _mainMenu.SetCanContinue(_game.FindContinueIndex() >= 0);
+        }
+
+        /// <summary>Sends the won run for verification and shows the world ranking if the panel is still up.</summary>
+        private async void SubmitRun(GameSession wonSession)
+        {
+            if (_cloud == null || wonSession == null) return;
+
+            var result = await _cloud.SubmitRunAsync(wonSession);
+            if (_win.IsVisible && _game.Current == wonSession) _win.SetRanking(Strings.Ranking(result));
+            SyncProgress();
         }
 
         private void OpenLevel(int index)

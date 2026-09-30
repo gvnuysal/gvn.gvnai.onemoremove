@@ -1,0 +1,11 @@
+<Project>
+  <!-- The server compiles the game's pure C# assemblies (Core, Session, Persistence) from the Unity project, so rule
+       checks, replays, merges and the wire format are the exact code the game runs. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <GameScripts>$(MSBuildThisFileDirectory)../Assets/_Project/Scripts</GameScripts>
+  </PropertyGroup>
+</Project>

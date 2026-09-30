@@ -58,6 +58,7 @@
                 <ui:Label name="win-moves" class="t-large" />
                 <ui:Label name="win-best" class="t-small muted" />
                 <ui:Label name="win-note" class="t-small" />
+                <ui:Label name="win-rank" class="t-small muted" />
                 <ui:VisualElement class="panel__buttons">
                     <ui:Button name="next-button" text="Sonraki Bölüm" class="menu-button t-large" />
                     <ui:Button name="replay-button" text="Tekrar Oyna" class="menu-button t-large" />

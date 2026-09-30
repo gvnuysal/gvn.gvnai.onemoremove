@@ -31,6 +31,10 @@ sysinfo.txt
 !/Tools/**/*.csproj
 /Tools/**/bin/
 /Tools/**/obj/
+!/Server/**/*.csproj
+/Server/**/bin/
+/Server/**/obj/
+/Server/**/*.db
 
 # IDE
 .idea/

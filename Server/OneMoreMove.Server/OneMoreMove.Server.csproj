@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <RootNamespace>OneMoreMove.Server</RootNamespace>
+    <NoWarn>$(NoWarn);CS1591;CS0649</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(GameScripts)/Core/**/*.cs" LinkBase="Game/Core" />
+    <Compile Include="$(GameScripts)/Session/**/*.cs" LinkBase="Game/Session" />
+    <Compile Include="$(GameScripts)/Persistence/**/*.cs" LinkBase="Game/Persistence" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.12" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.12" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <!-- Pins the native SQLite build past GHSA-2m69-gcr7-jv3q (EF Core's default brings 2.1.11). -->
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="OneMoreMove.Server.Tests" />
+  </ItemGroup>
+
+</Project>
