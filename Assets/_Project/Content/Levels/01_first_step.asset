@@ -17,8 +17,8 @@ MonoBehaviour:
   revision: 1
   rulesVersion: 2
   isTutorial: 1
-  tip: "Ta\u015F\u0131n\u0131 ok tu\u015Flar\u0131 ya da WASD ile hareket ettir ve
-    hedef kareye ula\u015F."
+  tip: "Ta\u015F\u0131n\u0131 kayd\u0131rarak, y\xF6n d\xFC\u011Fmeleriyle ya da
+    ok tu\u015Flar\u0131yla hareket ettir ve hedef kareye ula\u015F."
   width: 5
   height: 5
   walls: []

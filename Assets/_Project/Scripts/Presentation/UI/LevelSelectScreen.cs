@@ -1,5 +1,6 @@
 using System;
 using OneMoreMove.Session;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace OneMoreMove.Presentation.UI
@@ -15,6 +16,10 @@ namespace OneMoreMove.Presentation.UI
             _grid = Find<VisualElement>(root, "level-grid");
             _back = Find<Button>(root, "level-select-back");
             _back.clicked += () => BackClicked?.Invoke();
+
+            // Touch screens scroll by dragging; the desktop scrollbar only takes space there.
+            var scroll = root.Q<ScrollView>();
+            if (scroll != null && Application.isMobilePlatform) scroll.verticalScrollerVisibility = ScrollerVisibility.Hidden;
         }
 
         public event Action<int> LevelChosen;

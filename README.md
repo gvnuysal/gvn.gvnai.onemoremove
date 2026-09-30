@@ -27,6 +27,14 @@ U="/Applications/Unity/Hub/Editor/6000.3.25f1/Unity.app/Contents/MacOS/Unity"
 # Tests
 "$U" -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults editmode-results.xml
 "$U" -batchmode -projectPath . -runTests -testPlatform PlayMode -testResults playmode-results.xml
+# Player builds (start Unity on the matching -buildTarget to avoid a platform switch); output goes to Builds/
+"$U" -batchmode -nographics -projectPath . -buildTarget iOS -executeMethod OneMoreMove.EditorTools.BuildTools.BuildIosSimulator
+"$U" -batchmode -nographics -projectPath . -buildTarget iOS -executeMethod OneMoreMove.EditorTools.BuildTools.BuildIos
+"$U" -batchmode -nographics -projectPath . -buildTarget Android -executeMethod OneMoreMove.EditorTools.BuildTools.BuildAndroid
+"$U" -batchmode -nographics -projectPath . -buildTarget OSXUniversal -executeMethod OneMoreMove.EditorTools.BuildTools.BuildMac
+"$U" -batchmode -nographics -projectPath . -buildTarget Win64 -executeMethod OneMoreMove.EditorTools.BuildTools.BuildWindows
+# iOS Simulator: build the generated Xcode project, then install it on a booted simulator
+xcodebuild -project Builds/iOS-Simulator/Unity-iPhone.xcodeproj -scheme Unity-iPhone -destination "generic/platform=iOS Simulator" -derivedDataPath Builds/iOS-Simulator/dd CODE_SIGNING_ALLOWED=NO build
 # Content release gate only
 "$U" -batchmode -nographics -projectPath . -executeMethod OneMoreMove.EditorTools.CatalogValidator.ValidateBatch -logFile -
 ```
@@ -36,6 +44,8 @@ In the editor, use the **One More Move** menu for the same actions. Selecting a 
 ## Controls
 
 Arrows/WASD move, Space/. wait (the d-pad centre button), Z/Backspace undo, R restart, H hint, Esc menu/back.
+Touch: swipe on the board to move, tap your own piece to wait, or use the on-screen d-pad. Phones play in portrait;
+`ScreenLayout` keeps the UI inside the safe area and fits the board between the HUD rows.
 
 ## Content workflow
 

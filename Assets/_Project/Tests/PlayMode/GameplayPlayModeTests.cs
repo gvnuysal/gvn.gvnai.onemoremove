@@ -20,6 +20,7 @@ namespace OneMoreMove.Tests
         }
 
         private GameObject _root;
+        private Camera _camera;
         private BoardView _board;
         private GameCoordinator _game;
         private GameplayController _gameplay;
@@ -31,6 +32,7 @@ namespace OneMoreMove.Tests
             _root = new GameObject("PlayModeTestRoot");
             var camera = new GameObject("Camera").AddComponent<Camera>();
             camera.transform.SetParent(_root.transform);
+            _camera = camera;
             _board = new GameObject("Board").AddComponent<BoardView>();
             _board.transform.SetParent(_root.transform);
             _board.SetCamera(camera);
@@ -117,6 +119,37 @@ namespace OneMoreMove.Tests
             Assert.That(_game.Current.State.MoveCount, Is.EqualTo(1));
             Assert.That(_game.Current.State.IsGateOpen(0), Is.Not.EqualTo(gateBefore));
             Assert.That(_board.PlayerWorldPosition, Is.EqualTo(_board.CellToWorld(new GridPos(0, 0))));
+        }
+
+        [Test]
+        public void Swipes_MapToTheirDominantDirection()
+        {
+            Assert.That(TouchGestures.DominantDirection(new Vector2(80f, 10f)), Is.EqualTo(Direction.Right));
+            Assert.That(TouchGestures.DominantDirection(new Vector2(-80f, 30f)), Is.EqualTo(Direction.Left));
+            Assert.That(TouchGestures.DominantDirection(new Vector2(5f, 90f)), Is.EqualTo(Direction.Up), "Screen y grows upwards.");
+            Assert.That(TouchGestures.DominantDirection(new Vector2(-20f, -90f)), Is.EqualTo(Direction.Down));
+        }
+
+        [Test]
+        public void ScreenPositions_MapBackToBoardCells()
+        {
+            foreach (var cell in new[] { new GridPos(0, 0), new GridPos(2, 0), new GridPos(4, 0) })
+            {
+                var screen = _camera.WorldToScreenPoint(_board.CellToWorld(cell));
+                Assert.That(_board.TryScreenToCell(screen, out var hit), Is.True);
+                Assert.That(hit, Is.EqualTo(cell));
+            }
+
+            Assert.That(_board.TryScreenToCell(_camera.WorldToScreenPoint(_board.CellToWorld(new GridPos(0, 0)) + Vector3.up * 3f), out _), Is.False);
+        }
+
+        [Test]
+        public void ReservingMoreScreenForTheHud_ZoomsTheBoardOut()
+        {
+            _board.SetReservedFractions(0.1f, 0.1f);
+            var roomy = _camera.orthographicSize;
+            _board.SetReservedFractions(0.3f, 0.35f);
+            Assert.That(_camera.orthographicSize, Is.GreaterThan(roomy));
         }
 
         [UnityTest]

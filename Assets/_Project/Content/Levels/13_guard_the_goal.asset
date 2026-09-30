@@ -18,7 +18,7 @@ MonoBehaviour:
   rulesVersion: 2
   isTutorial: 0
   tip: "Yank\u0131n\u0131n durdu\u011Fu kareye giremezsin. Hedefin \xFCst\xFCne ge\xE7erse
-    yolunu keser; o zaman Z ile geri al."
+    yolunu keser; o zaman geri al."
   width: 5
   height: 5
   walls:

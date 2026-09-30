@@ -80,13 +80,19 @@ namespace OneMoreMove.Presentation
             switch (topic)
             {
                 case MechanicTopic.Gates:
-                    return "Hatırlatma: Her başarılı hamlede bütün kapılar açılır ya da kapanır. Kapalı kapıya girilemez; üstündeki taş ise çıkabilir. Beklemek (Boşluk) de bir hamledir ve kapıları çevirir.";
+                    return "Hatırlatma: Her başarılı hamlede bütün kapılar açılır ya da kapanır. Kapalı kapıya girilemez; üstündeki taş ise çıkabilir. Beklemek de bir hamledir ve kapıları çevirir.";
                 case MechanicTopic.Echo:
                     return "Hatırlatma: Yankı her hamlede senin yönünün tersine gider. Önü kapalıysa yerinde kalır; onun bulunduğu kareye giremezsin.";
                 default:
                     return "Hatırlatma: Taşın dört yönden birine bir kare gider ya da bir tur bekler. Hedef kareye ulaş.";
             }
         }
+
+        // Touch devices have no keyboard: button labels drop the shortcut hints shown in App.uxml.
+        public const string MenuButtonTouch = "Menü";
+        public const string UndoButtonTouch = "Geri Al";
+        public const string RestartButtonTouch = "Yeniden Başlat";
+        public const string HintButtonTouch = "İpucu";
 
         public static string DirectionName(Direction direction)
         {

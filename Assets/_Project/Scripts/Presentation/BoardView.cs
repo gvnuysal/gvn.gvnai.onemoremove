@@ -24,6 +24,7 @@ namespace OneMoreMove.Presentation
 
         /// <summary>Small boards (the 5×1 tutorial) are framed like 5×5 ones so cell size stays consistent.</summary>
         private const int MinFramedCells = 5;
+        private const float MaxReserved = 0.45f;
 
         [SerializeField] private Camera boardCamera;
 
@@ -31,9 +32,9 @@ namespace OneMoreMove.Presentation
         [SerializeField, Range(0.05f, 0.4f)] private float moveDuration = 0.15f;
 
         [Tooltip("Screen fractions kept free for the HUD above and below the board.")]
-        [SerializeField, Range(0f, 0.4f)] private float topReserved = 0.2f;
+        [SerializeField, Range(0f, MaxReserved)] private float topReserved = 0.2f;
 
-        [SerializeField, Range(0f, 0.4f)] private float bottomReserved = 0.27f;
+        [SerializeField, Range(0f, MaxReserved)] private float bottomReserved = 0.27f;
 
         private readonly TweenRunner _tweens = new TweenRunner();
         private readonly List<SpriteRenderer> _pool = new List<SpriteRenderer>();
@@ -200,6 +201,29 @@ namespace OneMoreMove.Presentation
             var x = cell.X - (_level.Width - 1) * 0.5f;
             var y = (_level.Height - 1) * 0.5f - cell.Y;
             return new Vector3(x, y, 0f);
+        }
+
+        /// <summary>The board cell under a screen position (pixels, origin bottom left); false when off the board.</summary>
+        public bool TryScreenToCell(Vector2 screenPosition, out GridPos cell)
+        {
+            cell = default;
+            if (boardCamera == null || _level == null) return false;
+
+            var world = boardCamera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, -boardCamera.transform.position.z));
+            cell = new GridPos(Mathf.RoundToInt(world.x + (_level.Width - 1) * 0.5f), Mathf.RoundToInt((_level.Height - 1) * 0.5f - world.y));
+            return _level.InBounds(cell);
+        }
+
+        /// <summary>Screen height fractions covered by the HUD above and below the board; the board is fitted into the rest.</summary>
+        public void SetReservedFractions(float top, float bottom)
+        {
+            top = Mathf.Clamp(top, 0f, MaxReserved);
+            bottom = Mathf.Clamp(bottom, 0f, MaxReserved);
+            if (Mathf.Approximately(top, topReserved) && Mathf.Approximately(bottom, bottomReserved)) return;
+
+            topReserved = top;
+            bottomReserved = bottom;
+            FitCamera(force: true);
         }
 
         private void Update()

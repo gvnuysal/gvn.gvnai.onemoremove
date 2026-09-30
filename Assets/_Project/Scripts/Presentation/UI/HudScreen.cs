@@ -1,6 +1,7 @@
 using System;
 using OneMoreMove.Core;
 using OneMoreMove.Session;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace OneMoreMove.Presentation.UI
@@ -38,6 +39,14 @@ namespace OneMoreMove.Presentation.UI
 
             foreach (var button in new[] { _undo, _hint, restart, menu }) button.focusable = false;
 
+            if (Application.isMobilePlatform)
+            {
+                menu.text = Strings.MenuButtonTouch;
+                _undo.text = Strings.UndoButtonTouch;
+                restart.text = Strings.RestartButtonTouch;
+                _hint.text = Strings.HintButtonTouch;
+            }
+
             foreach (var direction in Directions.All)
             {
                 var button = Find<Button>(root, "dir-" + direction.ToString().ToLowerInvariant());
@@ -51,7 +60,7 @@ namespace OneMoreMove.Presentation.UI
 
             var wait = Find<Button>(root, "dir-wait");
             wait.focusable = false;
-            wait.tooltip = Strings.DirectionName(Direction.Wait) + " (Boşluk)";
+            wait.tooltip = Strings.DirectionName(Direction.Wait) + (Application.isMobilePlatform ? string.Empty : " (Boşluk)");
             wait.Add(UiIcons.Icon(Shape.Wait, Palette.Primary, 36f));
             wait.clicked += () => DirectionClicked?.Invoke(Direction.Wait);
             wait.RegisterCallback<PointerEnterEvent>(_ => DirectionHovered?.Invoke(Direction.Wait));

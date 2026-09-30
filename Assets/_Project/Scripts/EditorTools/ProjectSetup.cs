@@ -66,6 +66,7 @@ namespace OneMoreMove.EditorTools
             var catalog = BuildCatalog();
             var panelSettings = BuildPanelSettings();
             BuildScene(catalog, panelSettings);
+            BuildTools.ConfigurePlayerSettings();
             AssetDatabase.SaveAssets();
             Debug.Log("[ProjectSetup] Done.");
         }

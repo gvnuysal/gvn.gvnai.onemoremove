@@ -1,3 +1,3 @@
 { "id": "l02_walls", "name": "Duvar", "revision": 1, "parMoves": 8,
-  "tip": "Duvarlardan geçilemez. Yanlış bir hamleyi Z ile geri alabilirsin.",
+  "tip": "Duvarlardan geçilemez. Yanlış bir hamleyi Geri Al ile geri alabilirsin.",
   "map": [".....", "P.#.G", "..#..", "..#..", "....."] }

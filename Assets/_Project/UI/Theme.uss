@@ -152,6 +152,8 @@
 }
 
 .level-card__title {
+    /* Full card width: a shrink-to-fit label can wrap its last glyph when measured and rendered widths differ. */
+    width: 100%;
     white-space: normal;
     -unity-text-align: middle-center;
     margin-bottom: 6px;
@@ -326,4 +328,74 @@
     white-space: normal;
     -unity-text-align: middle-center;
     max-width: 800px;
+}
+
+/* Portrait (phones). ScreenLayout toggles .app--portrait; touch targets stay at least 44 pt on a 3x phone. */
+.app--portrait .screen--centered {
+    padding: 32px 24px;
+}
+
+.app--portrait .hud__top {
+    height: auto;
+    min-height: 130px;
+    padding: 12px 16px;
+}
+
+.app--portrait .hud__undo-count {
+    width: auto;
+}
+
+.app--portrait .hud__bottom {
+    height: auto;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 12px 16px 24px 16px;
+}
+
+.app--portrait .hud__actions {
+    width: auto;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.app--portrait .hud__actions .hud-button {
+    margin: 0 6px;
+    min-height: 110px;
+    padding: 10px 18px;
+}
+
+.app--portrait .hud-button {
+    min-height: 110px;
+}
+
+.app--portrait .dpad__button {
+    width: 112px;
+    height: 112px;
+}
+
+.app--portrait .dpad__center {
+    border-radius: 56px;
+}
+
+.app--portrait .level-card {
+    width: 190px;
+    height: 180px;
+    margin: 8px;
+}
+
+.app--portrait .panel {
+    min-width: 0;
+    max-width: 94%;
+    padding: 32px 28px;
+}
+
+.app--portrait .panel__buttons--row {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.app--portrait .menu-button {
+    min-height: 110px;
 }

@@ -22,6 +22,8 @@ namespace OneMoreMove.Presentation
         private readonly WinPanel _win;
         private readonly SettingsScreen _settings;
         private readonly ConfirmDialog _dialog;
+        private readonly ScreenLayout _layout;
+        private readonly TouchGestures _gestures;
 
         public AppPresenter(VisualElement root, GameCoordinator game, GameplayController gameplay, BoardView board, InputController input, Action quit)
         {
@@ -38,6 +40,8 @@ namespace OneMoreMove.Presentation
             _win = new WinPanel(Find("win-panel"));
             _settings = new SettingsScreen(Find("settings"));
             _dialog = new ConfirmDialog(Find("dialog"));
+            _layout = new ScreenLayout(root, board);
+            _gestures = new TouchGestures(root, board, () => _gameplay.Session?.State.Player);
 
             Wire();
         }
@@ -56,6 +60,8 @@ namespace OneMoreMove.Presentation
 
         public void Tick(float deltaSeconds)
         {
+            _layout.Tick();
+            _gestures.Tick(IsPlaying);
             if (IsPlaying) _gameplay.Tick(deltaSeconds);
         }
 
@@ -66,6 +72,7 @@ namespace OneMoreMove.Presentation
             _input.Restart -= OnRestart;
             _input.Hint -= OnHint;
             _input.Back -= OnBack;
+            _gestures.Move -= OnMove;
         }
 
         private void Wire()
@@ -75,6 +82,7 @@ namespace OneMoreMove.Presentation
             _input.Restart += OnRestart;
             _input.Hint += OnHint;
             _input.Back += OnBack;
+            _gestures.Move += OnMove;
 
             _mainMenu.ContinueClicked += () =>
             {

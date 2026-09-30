@@ -8,6 +8,7 @@
 /[Uu]ser[Ss]ettings/
 /[Mm]emoryCaptures/
 /[Rr]ecordings/
+/.utmp/
 /Assets/Plugins/Editor/JetBrains*
 *.csproj
 *.sln

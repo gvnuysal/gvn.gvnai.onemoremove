@@ -17,8 +17,8 @@ MonoBehaviour:
   revision: 1
   rulesVersion: 2
   isTutorial: 1
-  tip: "Bo\u015Fluk tu\u015Fu ya da ortadaki d\xFC\u011Fme: yerinde bekle. Bekledi\u011Finde
-    de kap\u0131lar de\u011Fi\u015Fir."
+  tip: "Ortadaki d\xFC\u011Fme, ta\u015F\u0131na dokunmak ya da Bo\u015Fluk tu\u015Fu:
+    yerinde bekle. Bekledi\u011Finde de kap\u0131lar de\u011Fi\u015Fir."
   width: 5
   height: 1
   walls: []

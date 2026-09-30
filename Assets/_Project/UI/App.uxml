@@ -23,7 +23,7 @@
         </ui:VisualElement>
 
         <ui:VisualElement name="hud" class="screen hud" picking-mode="Ignore">
-            <ui:VisualElement class="hud__top">
+            <ui:VisualElement name="hud-top" class="hud__top">
                 <ui:Button name="menu-button" text="Menü (Esc)" class="hud-button t-small" />
                 <ui:VisualElement class="hud__title" picking-mode="Ignore">
                     <ui:Label name="level-name" class="t-large" picking-mode="Ignore" />
@@ -34,7 +34,7 @@
             <ui:Label name="feedback" class="feedback t-small" picking-mode="Ignore" />
             <ui:Label name="level-tip" class="level-tip t-small" picking-mode="Ignore" />
             <ui:VisualElement class="hud__bottom" picking-mode="Ignore">
-                <ui:VisualElement class="dpad">
+                <ui:VisualElement name="dpad" class="dpad">
                     <ui:Button name="dir-up" class="dpad__button dpad__up" />
                     <ui:VisualElement class="dpad__row" picking-mode="Ignore">
                         <ui:Button name="dir-left" class="dpad__button" />
@@ -43,7 +43,7 @@
                     </ui:VisualElement>
                     <ui:Button name="dir-down" class="dpad__button" />
                 </ui:VisualElement>
-                <ui:VisualElement class="hud__actions" picking-mode="Ignore">
+                <ui:VisualElement name="hud-actions" class="hud__actions" picking-mode="Ignore">
                     <ui:Button name="undo-button" text="Geri Al (Z)" class="hud-button hud-button--primary t-large" />
                     <ui:Button name="restart-button" text="Yeniden Başlat (R)" class="hud-button t-large" />
                     <ui:Button name="hint-button" text="İpucu (H)" class="hud-button t-large" />

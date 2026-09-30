@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace OneMoreMove.Presentation.UI
@@ -17,7 +18,10 @@ namespace OneMoreMove.Presentation.UI
             _continue.clicked += () => ContinueClicked?.Invoke();
             _levels.clicked += () => LevelsClicked?.Invoke();
             Find<Button>(root, "settings-button").clicked += () => SettingsClicked?.Invoke();
-            Find<Button>(root, "quit-button").clicked += () => QuitClicked?.Invoke();
+            var quit = Find<Button>(root, "quit-button");
+            quit.clicked += () => QuitClicked?.Invoke();
+            // iOS apps must not quit themselves (App Store guideline); the home gesture does that.
+            if (Application.platform == RuntimePlatform.IPhonePlayer) quit.style.display = DisplayStyle.None;
             SetMessage(null);
         }
 
