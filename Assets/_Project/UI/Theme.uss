@@ -399,3 +399,62 @@
 .app--portrait .menu-button {
     min-height: 110px;
 }
+
+/* Settings controls: theme colours instead of the default runtime theme, a focus ring instead of a recoloured
+   label (the default focus label colour is low-contrast here), and touch-sized handles. */
+.setting .unity-base-field__label {
+    color: var(--text);
+    min-width: 300px;
+}
+
+.setting:focus .unity-base-field__label,
+.setting:hover .unity-base-field__label {
+    color: var(--text);
+}
+
+.setting .unity-toggle__checkmark {
+    width: 44px;
+    height: 44px;
+    background-color: var(--surface-raised);
+    border-width: 2px;
+    border-color: var(--muted);
+    border-radius: 8px;
+    -unity-background-image-tint-color: var(--primary);
+}
+
+.setting.unity-base-slider {
+    min-height: 72px;
+}
+
+.setting .unity-base-slider__tracker {
+    height: 10px;
+    border-width: 0;
+    border-radius: 5px;
+    background-color: var(--surface-raised);
+}
+
+.setting .unity-base-slider__dragger {
+    width: 36px;
+    height: 48px;
+    margin-top: -19px;
+    border-width: 0;
+    border-radius: 10px;
+    background-color: var(--primary);
+}
+
+.setting .unity-base-popup-field__input {
+    min-height: 60px;
+    border-width: 2px;
+    border-color: var(--muted);
+    border-radius: 10px;
+    background-color: var(--surface-raised);
+    color: var(--text);
+}
+
+.setting .unity-base-popup-field__text {
+    color: var(--text);
+}
+
+.setting .unity-base-popup-field__arrow {
+    -unity-background-image-tint-color: var(--text);
+}

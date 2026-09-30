@@ -4,13 +4,13 @@ namespace OneMoreMove.Presentation
 {
     /// <summary>
     /// High-contrast palette: one primary (player, focus) and one accent (echo). State is always also encoded by shape,
-    /// never by colour alone.
+    /// never by colour alone. Every board element reaches 3:1 against the floor (WCAG 1.4.11), enforced by ContrastTests.
     /// </summary>
     public static class Palette
     {
         public static readonly Color Background = Hex(0x12141C);
         public static readonly Color Floor = Hex(0x222637);
-        public static readonly Color Wall = Hex(0x4A5170);
+        public static readonly Color Wall = Hex(0x667096);
         public static readonly Color Goal = Hex(0xE9ECF5);
         public static readonly Color Gate = Hex(0xC9CEDB);
         public static readonly Color GateOpen = new Color(0.79f, 0.81f, 0.86f, 0.55f);

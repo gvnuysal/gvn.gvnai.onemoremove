@@ -26,6 +26,7 @@ namespace OneMoreMove.Presentation
         private readonly ConfirmDialog _dialog;
         private readonly ScreenLayout _layout;
         private readonly TouchGestures _gestures;
+        private readonly ScreenReaderSupport _screenReader;
 
         public AppPresenter(VisualElement root, GameCoordinator game, GameplayController gameplay, BoardView board, InputController input,
             AudioService audio, Action quit)
@@ -46,6 +47,7 @@ namespace OneMoreMove.Presentation
             _dialog = new ConfirmDialog(Find("dialog"));
             _layout = new ScreenLayout(root, board);
             _gestures = new TouchGestures(root, board, () => _gameplay.Session?.State.Player);
+            _screenReader = new ScreenReaderSupport(root, DescribeBoard, () => _hud.IsVisible ? _layout.BoardArea : (UnityEngine.Rect?)null);
 
             Wire();
         }
@@ -68,6 +70,7 @@ namespace OneMoreMove.Presentation
         {
             _layout.Tick();
             _gestures.Tick(IsPlaying);
+            _screenReader.Tick(deltaSeconds);
             if (IsPlaying) _gameplay.Tick(deltaSeconds);
         }
 
@@ -148,6 +151,7 @@ namespace OneMoreMove.Presentation
             _gameplay.Feedback += _hud.SetFeedback;
             _gameplay.LevelCompleted += OnLevelCompleted;
             _gameplay.MovePlayed += _audio.PlayMove;
+            _gameplay.MovePlayed += result => _screenReader.Announce(BoardDescriber.DescribeMove(result));
             _gameplay.Undone += () => _audio.Play(Sound.Undo);
             _gameplay.Restarted += () => _audio.Play(Sound.Undo);
         }
@@ -253,6 +257,12 @@ namespace OneMoreMove.Presentation
             _settings.Hide();
             _dialog.Hide();
             _gameplay.HidePreview();
+        }
+
+        private string DescribeBoard()
+        {
+            var session = _gameplay.Session;
+            return _hud.IsVisible && session != null ? BoardDescriber.Describe(session.Level, session.State) : null;
         }
 
         private void RefreshHud() => _hud.Refresh(_gameplay.Session, _game.CurrentIndex, _gameplay.IsHintPending);

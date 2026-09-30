@@ -47,6 +47,20 @@ Arrows/WASD move, Space/. wait (the d-pad centre button), Z/Backspace undo, R re
 Touch: swipe on the board to move, tap your own piece to wait, or use the on-screen d-pad. Phones play in portrait;
 `ScreenLayout` keeps the UI inside the safe area and fits the board between the HUD rows.
 
+## Accessibility
+
+- Contrast: UI text ≥ 4.5:1, focus ring and every board element ≥ 3:1 against the floor (WCAG 1.4.11); enforced by
+  `AccessibilityPlayModeTests`, which read `Theme.uss` and `Palette`.
+- State is never shown by colour alone (player circle, echo diamond, open/closed gate icons, "Kilitli" text, star
+  tooltips); no information is carried by sound alone.
+- Keyboard/gamepad: menus open with a visible focus; arrows/d-pad move it, Enter/South activates (focus order is tested
+  with UI Toolkit navigation events; the key → navigation mapping is Unity's and needs a focused window, so check it
+  by hand in the editor).
+- Screen readers (VoiceOver, TalkBack): `ScreenReaderSupport` mirrors the visible controls into Unity's accessibility
+  hierarchy (buttons, toggles, sliders with increment/decrement, dropdowns), reads the board with `BoardDescriber`
+  and announces every move. Modal panels hide what is behind them.
+- Reduced motion, text size (100–150 %), separate effect and music volumes, ≥ 44 pt touch targets in portrait.
+
 ## Content workflow
 
 Level design tool (plain .NET, runs the game's own Core code without Unity): `Tools/LevelLab`.

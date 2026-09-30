@@ -46,6 +46,9 @@ namespace OneMoreMove.Presentation.UI
 
         public bool IsPortrait { get; private set; }
 
+        /// <summary>Panel-space area between the HUD rows where the board is drawn (for screen reader frames).</summary>
+        public Rect BoardArea { get; private set; }
+
         /// <summary>Call once per frame; does work only when the screen size or safe area changed.</summary>
         public void Tick()
         {
@@ -106,6 +109,7 @@ namespace OneMoreMove.Presentation.UI
             var bottomEdge = Mathf.Min(_dpad.worldBound.yMin, _actions.worldBound.yMin);
             if (float.IsNaN(top) || float.IsNaN(bottomEdge)) return;
 
+            BoardArea = new Rect(0f, top, _app.worldBound.width, Mathf.Max(0f, bottomEdge - top));
             _board.SetReservedFractions(top / panelHeight + Gap, (panelHeight - bottomEdge) / panelHeight + Gap);
         }
 
