@@ -1,5 +1,6 @@
 using System;
 using OneMoreMove.Core;
+using OneMoreMove.Presentation.Audio;
 using OneMoreMove.Presentation.UI;
 using OneMoreMove.Session;
 using UnityEngine.UIElements;
@@ -14,6 +15,7 @@ namespace OneMoreMove.Presentation
         private readonly GameplayController _gameplay;
         private readonly BoardView _board;
         private readonly InputController _input;
+        private readonly AudioService _audio;
         private readonly Action _quit;
 
         private readonly MainMenuScreen _mainMenu;
@@ -25,13 +27,15 @@ namespace OneMoreMove.Presentation
         private readonly ScreenLayout _layout;
         private readonly TouchGestures _gestures;
 
-        public AppPresenter(VisualElement root, GameCoordinator game, GameplayController gameplay, BoardView board, InputController input, Action quit)
+        public AppPresenter(VisualElement root, GameCoordinator game, GameplayController gameplay, BoardView board, InputController input,
+            AudioService audio, Action quit)
         {
             _root = root ?? throw new ArgumentNullException(nameof(root));
             _game = game;
             _gameplay = gameplay;
             _board = board;
             _input = input;
+            _audio = audio ?? throw new ArgumentNullException(nameof(audio));
             _quit = quit;
 
             _mainMenu = new MainMenuScreen(Find("main-menu"));
@@ -54,6 +58,8 @@ namespace OneMoreMove.Presentation
         public void Start()
         {
             ApplyTextScale();
+            _audio.SetVolumes(_game.Settings.SfxVolume, _game.Settings.MusicVolume);
+            _audio.StartMusic();
             var message = Strings.LoadStatus(_game.LoadStatus) ?? Strings.ResumeDiscarded(_game.ResumeDiscardReason);
             ShowMainMenu(message);
         }
@@ -124,12 +130,26 @@ namespace OneMoreMove.Presentation
                 _game.UpdateSettings(s => s.TextScalePercent = value);
                 ApplyTextScale();
             };
+            _settings.SfxVolumeChanged += value =>
+            {
+                _game.UpdateSettings(s => s.SfxVolume = value);
+                _audio.SetVolumes(_game.Settings.SfxVolume, _game.Settings.MusicVolume);
+                _audio.Play(Sound.Step);
+            };
+            _settings.MusicVolumeChanged += value =>
+            {
+                _game.UpdateSettings(s => s.MusicVolume = value);
+                _audio.SetVolumes(_game.Settings.SfxVolume, _game.Settings.MusicVolume);
+            };
             _settings.CloseClicked += CloseSettings;
             _dialog.Closed += UpdateInput;
 
             _gameplay.StateChanged += RefreshHud;
             _gameplay.Feedback += _hud.SetFeedback;
             _gameplay.LevelCompleted += OnLevelCompleted;
+            _gameplay.MovePlayed += _audio.PlayMove;
+            _gameplay.Undone += () => _audio.Play(Sound.Undo);
+            _gameplay.Restarted += () => _audio.Play(Sound.Undo);
         }
 
         private void OnMove(Direction direction)

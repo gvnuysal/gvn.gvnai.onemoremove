@@ -31,6 +31,12 @@ namespace OneMoreMove.Presentation
         /// <summary>Short explanation for the player; null clears it.</summary>
         public event Action<string> Feedback;
 
+        /// <summary>Every attempted move, accepted or rejected, as the board starts showing it (sound, haptics).</summary>
+        public event Action<MoveResult> MovePlayed;
+
+        public event Action Undone;
+        public event Action Restarted;
+
         /// <summary>Raised once per win, after the winning move has finished animating.</summary>
         public event Action<CompletionOutcome> LevelCompleted;
 
@@ -60,6 +66,7 @@ namespace OneMoreMove.Presentation
             {
                 _board.ShowRejected(outcome.Result, reducedMotion);
                 Feedback?.Invoke(Strings.Reject(outcome.Result.RejectReason));
+                MovePlayed?.Invoke(outcome.Result);
                 return false;
             }
 
@@ -71,6 +78,7 @@ namespace OneMoreMove.Presentation
             {
                 if (completion != null) LevelCompleted?.Invoke(completion);
             });
+            MovePlayed?.Invoke(outcome.Result);
             StateChanged?.Invoke();
             return true;
         }
@@ -84,6 +92,7 @@ namespace OneMoreMove.Presentation
 
             _board.Snap(Session.State);
             Feedback?.Invoke(null);
+            Undone?.Invoke();
             StateChanged?.Invoke();
             return true;
         }
@@ -97,6 +106,7 @@ namespace OneMoreMove.Presentation
             _game.Restart();
             _board.Snap(Session.State);
             Feedback?.Invoke(null);
+            Restarted?.Invoke();
             StateChanged?.Invoke();
         }
 

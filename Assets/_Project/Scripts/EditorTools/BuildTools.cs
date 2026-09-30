@@ -56,6 +56,7 @@ namespace OneMoreMove.EditorTools
         {
             var path = ArgumentValue("-buildPath") ?? defaultPath;
             var previousSdk = PlayerSettings.iOS.sdkVersion;
+            var exitCode = 1;
             try
             {
                 ConfigurePlayerSettings();
@@ -72,12 +73,11 @@ namespace OneMoreMove.EditorTools
 
                 var summary = report.summary;
                 Debug.Log($"[BuildTools] {target}: {summary.result}, {summary.totalSize / (1024 * 1024)} MB, {summary.totalErrors} errors → {summary.outputPath}");
-                if (Application.isBatchMode) EditorApplication.Exit(summary.result == BuildResult.Succeeded ? 0 : 1);
+                exitCode = summary.result == BuildResult.Succeeded ? 0 : 1;
             }
             catch (Exception e)
             {
                 Debug.LogException(e);
-                if (Application.isBatchMode) EditorApplication.Exit(1);
             }
             finally
             {
@@ -85,6 +85,9 @@ namespace OneMoreMove.EditorTools
                 PlayerSettings.iOS.sdkVersion = previousSdk;
                 AssetDatabase.SaveAssets();
             }
+
+            // Exit terminates immediately, so it must come after the settings are restored.
+            if (Application.isBatchMode) EditorApplication.Exit(exitCode);
         }
 
         private static string ArgumentValue(string name)

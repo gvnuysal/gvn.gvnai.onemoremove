@@ -1,6 +1,7 @@
 using OneMoreMove.Content;
 using OneMoreMove.Core.Solving;
 using OneMoreMove.Persistence;
+using OneMoreMove.Presentation.Audio;
 using OneMoreMove.Session;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -54,7 +55,7 @@ namespace OneMoreMove.Presentation
             boardView.SetCamera(boardCamera);
             _gameplay = new GameplayController(_game, boardView, new HintService(SolverBudget.Hint));
             _input = new InputController();
-            _app = new AppPresenter(uiDocument.rootVisualElement, _game, _gameplay, boardView, _input, Quit);
+            _app = new AppPresenter(uiDocument.rootVisualElement, _game, _gameplay, boardView, _input, new AudioService(gameObject), Quit);
             _app.Start();
         }
 

@@ -73,6 +73,8 @@
                 <ui:Toggle name="move-preview" label="Hamle önizlemesi" class="setting" />
                 <ui:Label text="Açıkken yön düğmesinin üzerine gelince taşların gideceği yer gösterilir." class="t-small muted setting-help" />
                 <ui:DropdownField name="text-size" label="Yazı boyutu" class="setting" />
+                <ui:SliderInt name="sfx-volume" label="Efekt sesi" low-value="0" high-value="100" class="setting" />
+                <ui:SliderInt name="music-volume" label="Müzik" low-value="0" high-value="100" class="setting" />
                 <ui:Button name="settings-close" text="Kapat" class="menu-button t-large" />
             </ui:VisualElement>
         </ui:VisualElement>
