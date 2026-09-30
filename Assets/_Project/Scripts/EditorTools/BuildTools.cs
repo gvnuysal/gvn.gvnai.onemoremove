@@ -17,6 +17,9 @@ namespace OneMoreMove.EditorTools
     {
         public const string BundleId = "com.gvnai.birhamledaha";
 
+        /// <summary>Marketing version shown in the stores. Bump for every release.</summary>
+        public const string Version = "1.0.0";
+
         [MenuItem("One More Move/Configure Player Settings")]
         public static void ConfigurePlayerSettings()
         {
@@ -37,6 +40,25 @@ namespace OneMoreMove.EditorTools
             // Apple silicon simulators (iOS 26+) no longer run x86_64 apps.
             PlayerSettings.iOS.simulatorSdkArchitecture = AppleMobileArchitectureSimulator.ARM64;
 
+            // Portrait only, so iPad multitasking (which demands every orientation) is opted out of.
+            PlayerSettings.iOS.requiresFullScreen = true;
+
+            // Versions: the marketing version is fixed in code, the store build number comes from the build machine.
+            PlayerSettings.bundleVersion = Version;
+            var buildNumber = int.TryParse(ArgumentValue("-buildNumber") ?? Environment.GetEnvironmentVariable("OMM_BUILD_NUMBER"), out var n) ? n : 1;
+            PlayerSettings.iOS.buildNumber = buildNumber.ToString();
+            PlayerSettings.Android.bundleVersionCode = buildNumber;
+
+            // No engine splash: the game opens straight on the board colours.
+            PlayerSettings.SplashScreen.show = false;
+            PlayerSettings.SplashScreen.showUnityLogo = false;
+            PlayerSettings.SplashScreen.backgroundColor = Presentation.Palette.Background;
+
+            var icon = AssetDatabase.LoadAssetAtPath<Texture2D>(IconGenerator.IconPath) ?? IconGenerator.Generate();
+            PlayerSettings.SetIcons(NamedBuildTarget.Unknown, new[] { icon }, IconKind.Any);
+
+            ConfigureAndroidSigning();
+
             AssetDatabase.SaveAssets();
         }
 
@@ -46,13 +68,49 @@ namespace OneMoreMove.EditorTools
 
         public static void BuildAndroid() => BuildBatch(BuildTarget.Android, "Builds/Android/BirHamleDaha.apk");
 
+        /// <summary>Google Play upload format. Needs a release keystore (see <see cref="ConfigureAndroidSigning"/>).</summary>
+        public static void BuildAndroidBundle()
+        {
+            var previous = EditorUserBuildSettings.buildAppBundle;
+            EditorUserBuildSettings.buildAppBundle = true;
+            try
+            {
+                BuildBatch(BuildTarget.Android, "Builds/Android/BirHamleDaha.aab", exitWhenDone: false);
+            }
+            finally
+            {
+                EditorUserBuildSettings.buildAppBundle = previous;
+            }
+
+            if (Application.isBatchMode) EditorApplication.Exit(_lastExitCode);
+        }
+
+        /// <summary>
+        /// Release signing from environment variables only (OMM_KEYSTORE, OMM_KEYSTORE_PASS, OMM_KEY_ALIAS, OMM_KEY_PASS),
+        /// so no key or password is ever stored in the project. Without them Unity signs with its debug key, which the
+        /// stores reject.
+        /// </summary>
+        private static void ConfigureAndroidSigning()
+        {
+            var keystore = Environment.GetEnvironmentVariable("OMM_KEYSTORE");
+            PlayerSettings.Android.useCustomKeystore = !string.IsNullOrEmpty(keystore);
+            if (!PlayerSettings.Android.useCustomKeystore) return;
+
+            PlayerSettings.Android.keystoreName = keystore;
+            PlayerSettings.Android.keystorePass = Environment.GetEnvironmentVariable("OMM_KEYSTORE_PASS");
+            PlayerSettings.Android.keyaliasName = Environment.GetEnvironmentVariable("OMM_KEY_ALIAS");
+            PlayerSettings.Android.keyaliasPass = Environment.GetEnvironmentVariable("OMM_KEY_PASS");
+        }
+
         /// <summary>Xcode project for a device; sign and archive it in Xcode.</summary>
         public static void BuildIos() => BuildBatch(BuildTarget.iOS, "Builds/iOS", iOSSdkVersion.DeviceSDK);
 
         /// <summary>Xcode project for the iOS Simulator (no signing needed).</summary>
         public static void BuildIosSimulator() => BuildBatch(BuildTarget.iOS, "Builds/iOS-Simulator", iOSSdkVersion.SimulatorSDK);
 
-        private static void BuildBatch(BuildTarget target, string defaultPath, iOSSdkVersion? iosSdk = null)
+        private static int _lastExitCode;
+
+        private static void BuildBatch(BuildTarget target, string defaultPath, iOSSdkVersion? iosSdk = null, bool exitWhenDone = true)
         {
             var path = ArgumentValue("-buildPath") ?? defaultPath;
             var previousSdk = PlayerSettings.iOS.sdkVersion;
@@ -81,13 +139,17 @@ namespace OneMoreMove.EditorTools
             }
             finally
             {
-                // A simulator build must not leave the project configured for the simulator.
+                // A simulator build must not leave the project configured for the simulator, and signing secrets
+                // read from the environment must never be written into ProjectSettings.
                 PlayerSettings.iOS.sdkVersion = previousSdk;
+                PlayerSettings.Android.keystorePass = string.Empty;
+                PlayerSettings.Android.keyaliasPass = string.Empty;
                 AssetDatabase.SaveAssets();
             }
 
             // Exit terminates immediately, so it must come after the settings are restored.
-            if (Application.isBatchMode) EditorApplication.Exit(exitCode);
+            _lastExitCode = exitCode;
+            if (exitWhenDone && Application.isBatchMode) EditorApplication.Exit(exitCode);
         }
 
         private static string ArgumentValue(string name)
