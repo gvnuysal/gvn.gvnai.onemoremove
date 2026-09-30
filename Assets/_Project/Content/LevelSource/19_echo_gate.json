@@ -1,0 +1,2 @@
+{ "id": "l19_echo_gate", "name": "Yankı Kapısı", "revision": 1, "parMoves": 14,
+  "map": [".ExxG", "#.#..", "x.#..", "#.P#.", "#.#.#"] }

@@ -1,2 +1,3 @@
 { "id": "l12_drag_the_echo", "name": "Yankıyı Sürükle", "revision": 1, "parMoves": 10,
+  "tip": "Yankının önü kapalıysa yerinde kalır. Bunu onu istediğin yere götürmek için kullan.",
   "map": ["#.EG#", ".#P#.", "....#", ".....", "....."] }

@@ -1,0 +1,3 @@
+{ "id": "l13_guard_the_goal", "name": "Hedefi Koru", "revision": 1, "parMoves": 8,
+  "tip": "Yankının durduğu kareye giremezsin. Hedefin üstüne geçerse yolunu keser; o zaman Z ile geri al.",
+  "map": ["EG...", "##...", "...#.", ".#.#.", "#P.#."] }

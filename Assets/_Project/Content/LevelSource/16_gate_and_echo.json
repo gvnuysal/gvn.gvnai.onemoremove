@@ -1,2 +1,3 @@
 { "id": "l16_gate_and_echo", "name": "Kapı ve Yankı", "revision": 1, "parMoves": 9,
+  "tip": "Kapalı kapı yankıyı da durdurur. Bekleyerek kapıların zamanını ayarlayabilirsin.",
   "map": ["PEG.#", ".#xo#", ".....", "..x..", "....."] }

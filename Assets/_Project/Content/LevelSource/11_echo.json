@@ -1,2 +1,3 @@
 { "id": "l11_echo", "name": "Yankı", "revision": 1, "parMoves": 7,
+  "tip": "Yankı her hamlede senin tam tersine gider. Hedefe yalnızca senin ulaşman gerekir.",
   "map": [".....", "#.#..", "..P..", ".#E#.", ".#.G."] }

@@ -10,29 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f1b90159842148ff9c88648978cdd10, type: 3}
-  m_Name: 07_drag_the_echo
+  m_Name: 13_guard_the_goal
   m_EditorClassIdentifier: OneMoreMove.Content::OneMoreMove.Content.LevelAsset
-  id: l12_drag_the_echo
-  displayName: "Yank\u0131y\u0131 S\xFCr\xFCkle"
+  id: l13_guard_the_goal
+  displayName: Hedefi Koru
   revision: 1
   rulesVersion: 2
   isTutorial: 0
-  tip: "Yank\u0131n\u0131n \xF6n\xFC kapal\u0131ysa yerinde kal\u0131r. Bunu onu
-    istedi\u011Fin yere g\xF6t\xFCrmek i\xE7in kullan."
+  tip: "Yank\u0131n\u0131n durdu\u011Fu kareye giremezsin. Hedefin \xFCst\xFCne ge\xE7erse
+    yolunu keser; o zaman Z ile geri al."
   width: 5
   height: 5
   walls:
-  - {x: 0, y: 0}
-  - {x: 4, y: 0}
+  - {x: 0, y: 1}
   - {x: 1, y: 1}
-  - {x: 3, y: 1}
-  - {x: 4, y: 2}
+  - {x: 3, y: 2}
+  - {x: 1, y: 3}
+  - {x: 3, y: 3}
+  - {x: 0, y: 4}
+  - {x: 3, y: 4}
   gates: []
-  playerStart: {x: 2, y: 1}
+  playerStart: {x: 1, y: 4}
   hasEcho: 1
-  echoStart: {x: 2, y: 0}
-  goal: {x: 3, y: 0}
-  parMoves: 10
+  echoStart: {x: 0, y: 0}
+  goal: {x: 1, y: 0}
+  parMoves: 8
   hasOptimalMoves: 1
-  optimalMoves: 8
-  knownSolution: 0200000003000000030000000100000001000000000000000000000001000000
+  optimalMoves: 6
+  knownSolution: 010000000000000000000000000000000000000003000000

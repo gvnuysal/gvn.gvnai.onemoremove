@@ -1,0 +1,2 @@
+{ "id": "l18_echo_trap", "name": "Yankı Tuzağı", "revision": 1, "parMoves": 12,
+  "map": [".#...", "#G.#x", "o##Px", ".#...", "...#E"] }

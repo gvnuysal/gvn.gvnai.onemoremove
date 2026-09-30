@@ -10,29 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f1b90159842148ff9c88648978cdd10, type: 3}
-  m_Name: 06_echo
+  m_Name: 19_echo_gate
   m_EditorClassIdentifier: OneMoreMove.Content::OneMoreMove.Content.LevelAsset
-  id: l11_echo
-  displayName: "Yank\u0131"
+  id: l19_echo_gate
+  displayName: "Yank\u0131 Kap\u0131s\u0131"
   revision: 1
   rulesVersion: 2
   isTutorial: 0
-  tip: "Yank\u0131 her hamlede senin tam tersine gider. Hedefe yaln\u0131zca senin
-    ula\u015Fman gerekir."
+  tip: 
   width: 5
   height: 5
   walls:
   - {x: 0, y: 1}
   - {x: 2, y: 1}
-  - {x: 1, y: 3}
+  - {x: 2, y: 2}
+  - {x: 0, y: 3}
   - {x: 3, y: 3}
-  - {x: 1, y: 4}
-  gates: []
-  playerStart: {x: 2, y: 2}
+  - {x: 0, y: 4}
+  - {x: 2, y: 4}
+  - {x: 4, y: 4}
+  gates:
+  - position: {x: 2, y: 0}
+    initiallyOpen: 0
+  - position: {x: 3, y: 0}
+    initiallyOpen: 0
+  - position: {x: 0, y: 2}
+    initiallyOpen: 0
+  playerStart: {x: 2, y: 3}
   hasEcho: 1
-  echoStart: {x: 2, y: 3}
-  goal: {x: 3, y: 4}
-  parMoves: 7
+  echoStart: {x: 1, y: 0}
+  goal: {x: 4, y: 0}
+  parMoves: 14
   hasOptimalMoves: 1
-  optimalMoves: 5
-  knownSolution: 0100000001000000020000000200000003000000
+  optimalMoves: 11
+  knownSolution: 0400000003000000000000000300000001000000000000000000000001000000040000000100000001000000
