@@ -1,2 +1,3 @@
-{ "id": "l07_gate_rhythm", "name": "Kapı Ritmi", "revision": 1, "parMoves": 5,
-  "map": ["..#..", "P.x.G", "..#..", "..o..", "..#.."] }
+{ "id": "l07_gate_rhythm", "name": "Kapı Ritmi", "revision": 2, "parMoves": 9,
+  "tip": "Kapıya vardığında ne durumda olacağını düşün. Üstündeyken kapanan kapıdan yine de çıkabilirsin.",
+  "map": [".#.x.", "...#P", "Goo.x", ".#..#", "....."] }

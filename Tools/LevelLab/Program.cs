@@ -14,7 +14,7 @@ namespace OneMoreMove.LevelLab
             "LevelLab — level design tool on top of the game's RulesEngine\n\n" +
             "  analyze [path]                        Report every level JSON in a folder (default: the seed folder) or one file\n" +
             "  map <row> <row> ...                   Report one ASCII map (P E G # o x O X .)\n" +
-            "  generate <profile> [--seed N] [--tries N] [--top N]\n" +
+            "  generate <profile> [--seed N] [--tries N] [--top N] [--min N] [--max N]\n" +
             "                                        Random search for candidate maps; profiles: " + "{0}\n";
 
         public static int Main(string[] args)
@@ -71,6 +71,9 @@ namespace OneMoreMove.LevelLab
             var seed = options.TryGetValue("seed", out var s) ? s : 1;
             var tries = options.TryGetValue("tries", out var t) ? t : 20000;
             var top = options.TryGetValue("top", out var k) ? k : 8;
+
+            if (options.TryGetValue("min", out var min)) profile.Optimal = (min, profile.Optimal.Max);
+            if (options.TryGetValue("max", out var max)) profile.Optimal = (profile.Optimal.Min, max);
 
             var candidates = LevelGenerator.Search(profile, seed, tries);
             foreach (var candidate in candidates.Take(top))

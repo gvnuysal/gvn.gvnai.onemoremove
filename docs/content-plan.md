@@ -6,21 +6,23 @@ the plan fills up.
 
 | Slot | Band | Level | Status | opt / par |
 |---|---|---|---|---|
-| 01 | Movement | İlk Adım (`01_first_step`) | shipped | 2 / 3 |
-| 02 | Movement | Duvar (`02_walls`) | shipped | 6 / 8 |
-| 03–05 | Movement, undo | 3 short mazes | **to do** (step 2) | |
-| 06 | Gates | Kapı (`06_gate_tutorial`) | shipped | 4 / 5 |
-| 07 | Gates | Kapı Ritmi (`07_gate_rhythm`) | **redesign** (step 2): the gate never costs a move | 4 / 5 |
-| 08 | Gates + Wait | Wait tutorial, e.g. `P..xG` | **to do** (step 2) | |
-| 09 | Gates + Wait | Aldatıcı Kapılar (`09_misleading_gates`) | redesigned for v2 | 8 / 10 |
-| 10 | Gates + Wait | Gate chain capstone | **to do** (step 2) | |
+| 01 | Movement | İlk Adım (`01_first_step`) · tip | shipped | 2 / 3 |
+| 02 | Movement, undo | Duvar (`02_walls`) · tip | shipped | 6 / 8 |
+| 03 | Movement | Dolambaç (`03_detour`): goal 3 away, path 5 | shipped | 5 / 7 |
+| 04 | Movement | Engel (`04_barrier`): same row, wall between | shipped | 8 / 10 |
+| 05 | Movement | Sarmal (`05_spiral`): 12-move spiral to a goal 4 away | shipped | 12 / 15 |
+| 06 | Gates | Kapı (`06_gate_tutorial`) · tip | shipped | 4 / 5 |
+| 07 | Gates | Kapı Ritmi (`07_gate_rhythm`) · tip: predict the gate on arrival. The open-looking gates are always closed when reached, the closed-looking one is open; Wait gives nothing | shipped (rev 2) | 7 / 9 |
+| 08 | Gates + Wait | Bekle (`08_wait`, `P..xG`) · tip: the Wait control | shipped | 5 / 7 |
+| 09 | Gates + Wait | Aldatıcı Kapılar (`09_misleading_gates`): wait through the chain (8) vs detour (11) | shipped | 8 / 10 |
+| 10 | Gates + Wait | Kapı Ustalığı (`10_gate_mastery`): three timed waits across four gates (12) vs the natural detour (13) | shipped | 12 / 15 |
 | 11 | Echo | Yankı (`11_echo`) | shipped | 5 / 7 |
 | 12 | Echo | Yankıyı Sürükle (`12_drag_the_echo`) | shipped | 8 / 10 |
-| 13–15 | Echo | Blocked echo, collisions | **to do** (step 3) | |
+| 13–15 | Echo | Blocked echo, collisions | **to do** (phase 1b) | |
 | 16 | Gates + echo | Kapı ve Yankı (`16_gate_and_echo`) | par fixed for v2 | 7 / 9 |
-| 17–20 | Gates + echo | One critical timing decision | **to do** (step 3) | |
-| 21–25 | Long plans | Same mechanics, new layouts | **to do** (step 4) | |
-| 26–30 | Mastery | Few moves, several plausible routes | **to do** (step 4) | |
+| 17–20 | Gates + echo | One critical timing decision | **to do** (phase 1b) | |
+| 21–25 | Long plans | Same mechanics, new layouts | **to do** (phase 1c) | |
+| 26–30 | Mastery | Few moves, several plausible routes | **to do** (phase 1c) | |
 
 ## Design rules learned from LevelLab
 
@@ -33,6 +35,10 @@ the plan fills up.
   suggested par.
 - Check that each mechanic in a level costs moves: `noGates`, `noEcho` and `noWait` should differ from `opt`,
   otherwise that mechanic is decoration (the old `04/07` gate).
+- Levels before 08 must not reward waiting (`noWait == opt`): Wait is visible from level 1 but only taught at 08.
+  LevelLab's `gate-rhythm` profile enforces this.
+- `tip` (optional, JSON) is a one-line teaching text shown in the HUD while the level is played. Use it where a
+  control or rule is introduced, not as a hint.
 
 ## Workflow
 
@@ -41,6 +47,7 @@ cd Tools/LevelLab
 dotnet run -- analyze                          # every seed level
 dotnet run -- map "P..xG"                      # one ASCII map
 dotnet run -- generate mixed --seed 3 --tries 300000
+dotnet run -- generate moves --min 8 --max 8     # override the optimum range of a profile
 ```
 
 Columns: `opt` optimum · `par` current/suggested · `ways` number of distinct optimal solutions · `wait` / `eblk`

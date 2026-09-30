@@ -10,35 +10,42 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8f1b90159842148ff9c88648978cdd10, type: 3}
-  m_Name: 05_misleading_gates
+  m_Name: 10_gate_mastery
   m_EditorClassIdentifier: OneMoreMove.Content::OneMoreMove.Content.LevelAsset
-  id: l09_misleading_gates
-  displayName: "Aldat\u0131c\u0131 Kap\u0131lar"
-  revision: 2
+  id: l10_gate_mastery
+  displayName: "Kap\u0131 Ustal\u0131\u011F\u0131"
+  revision: 1
   rulesVersion: 2
   isTutorial: 0
   tip: 
-  width: 5
+  width: 6
   height: 5
   walls:
+  - {x: 0, y: 0}
+  - {x: 1, y: 0}
+  - {x: 2, y: 0}
   - {x: 4, y: 0}
-  - {x: 1, y: 1}
   - {x: 2, y: 1}
-  - {x: 4, y: 1}
-  - {x: 3, y: 3}
-  - {x: 0, y: 4}
+  - {x: 3, y: 1}
+  - {x: 4, y: 2}
+  - {x: 1, y: 3}
+  - {x: 2, y: 3}
   gates:
-  - position: {x: 3, y: 0}
+  - position: {x: 1, y: 2}
     initiallyOpen: 0
-  - position: {x: 3, y: 1}
+  - position: {x: 2, y: 2}
+    initiallyOpen: 1
+  - position: {x: 0, y: 3}
+    initiallyOpen: 1
+  - position: {x: 3, y: 3}
     initiallyOpen: 0
-  - position: {x: 3, y: 2}
+  - position: {x: 4, y: 3}
     initiallyOpen: 0
-  playerStart: {x: 2, y: 0}
+  playerStart: {x: 1, y: 1}
   hasEcho: 0
   echoStart: {x: 0, y: 0}
-  goal: {x: 4, y: 3}
-  parMoves: 10
+  goal: {x: 4, y: 1}
+  parMoves: 15
   hasOptimalMoves: 1
-  optimalMoves: 8
-  knownSolution: 0400000001000000040000000200000004000000020000000100000002000000
+  optimalMoves: 12
+  knownSolution: 040000000200000001000000010000000400000002000000040000000100000001000000000000000000000003000000

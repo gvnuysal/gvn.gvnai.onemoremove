@@ -1,0 +1,2 @@
+{ "id": "l10_gate_mastery", "name": "Kapı Ustalığı", "revision": 1, "parMoves": 15,
+  "map": ["###.#.", ".P##G.", ".xo.#.", "o##xx.", "......"] }

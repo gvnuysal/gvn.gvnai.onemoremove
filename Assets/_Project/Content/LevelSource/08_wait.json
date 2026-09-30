@@ -1,0 +1,3 @@
+{ "id": "l08_wait", "name": "Bekle", "revision": 1, "tutorial": true, "parMoves": 7,
+  "tip": "Boşluk tuşu ya da ortadaki düğme: yerinde bekle. Beklediğinde de kapılar değişir.",
+  "map": ["P..xG"] }

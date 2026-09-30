@@ -15,6 +15,7 @@ namespace OneMoreMove.Presentation.UI
         private readonly Label _moves;
         private readonly Label _undoCount;
         private readonly Label _feedback;
+        private readonly Label _tip;
         private readonly Button _undo;
         private readonly Button _hint;
 
@@ -24,6 +25,7 @@ namespace OneMoreMove.Presentation.UI
             _moves = Find<Label>(root, "move-count");
             _undoCount = Find<Label>(root, "undo-count");
             _feedback = Find<Label>(root, "feedback");
+            _tip = Find<Label>(root, "level-tip");
             _undo = Find<Button>(root, "undo-button");
             _hint = Find<Button>(root, "hint-button");
             var restart = Find<Button>(root, "restart-button");
@@ -76,6 +78,10 @@ namespace OneMoreMove.Presentation.UI
             _undo.SetEnabled(session.CanUndo);
             _hint.SetEnabled(!session.IsWon && !hintPending);
             _hint.EnableInClassList("hud-button--used", session.HintUsed);
+
+            var tip = session.IsWon ? null : session.Level.Tip;
+            _tip.text = tip ?? string.Empty;
+            _tip.EnableInClassList("level-tip--hidden", string.IsNullOrEmpty(tip));
         }
 
         public void SetFeedback(string text)

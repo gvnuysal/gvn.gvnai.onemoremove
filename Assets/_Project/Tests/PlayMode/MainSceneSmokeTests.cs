@@ -38,7 +38,8 @@ namespace OneMoreMove.Tests
             var bootstrap = Object.FindAnyObjectByType<GameBootstrap>();
             Assert.That(bootstrap, Is.Not.Null);
             Assert.That(bootstrap.Game, Is.Not.Null, "Bootstrap did not start.");
-            Assert.That(bootstrap.Game.Library.Count, Is.EqualTo(8));
+            var seedLevels = Directory.GetFiles(Path.Combine(Application.dataPath, "_Project", "Content", "LevelSource"), "*.json").Length;
+            Assert.That(bootstrap.Game.Library.Count, Is.EqualTo(seedLevels), "The catalog must ship every seed level.");
 
             var root = Object.FindAnyObjectByType<UIDocument>().rootVisualElement;
             Assert.That(root.Q("main-menu").resolvedStyle.display, Is.EqualTo(DisplayStyle.Flex));

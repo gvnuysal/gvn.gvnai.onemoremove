@@ -25,6 +25,10 @@ namespace OneMoreMove.Content
         [SerializeField, Min(1)] private int revision = 1;
         [SerializeField, Min(1)] private int rulesVersion = RulesEngine.Version;
         [SerializeField] private bool isTutorial;
+
+        [Tooltip("Optional one-line teaching text shown in the HUD while this level is played.")]
+        [SerializeField, TextArea(1, 3)] private string tip;
+
         [SerializeField, Range(1, LevelDefinition.MaxDimension)] private int width = 5;
         [SerializeField, Range(1, LevelDefinition.MaxDimension)] private int height = 5;
         [SerializeField] private List<Vector2Int> walls = new List<Vector2Int>();
@@ -63,7 +67,8 @@ namespace OneMoreMove.Content
                 parMoves,
                 hasOptimalMoves ? optimalMoves : (int?)null,
                 knownSolution,
-                isTutorial);
+                isTutorial,
+                tip);
         }
 
         /// <summary>Overwrites every field from a definition (import, editor tools).</summary>
@@ -74,6 +79,7 @@ namespace OneMoreMove.Content
             revision = level.Revision;
             rulesVersion = level.RulesVersion;
             isTutorial = level.IsTutorial;
+            tip = level.Tip;
             width = level.Width;
             height = level.Height;
             walls = level.Walls.Select(ToVector).ToList();

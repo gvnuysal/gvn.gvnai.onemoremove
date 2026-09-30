@@ -32,6 +32,7 @@
                 <ui:Label name="undo-count" class="hud__undo-count t-small" picking-mode="Ignore" />
             </ui:VisualElement>
             <ui:Label name="feedback" class="feedback t-small" picking-mode="Ignore" />
+            <ui:Label name="level-tip" class="level-tip t-small" picking-mode="Ignore" />
             <ui:VisualElement class="hud__bottom" picking-mode="Ignore">
                 <ui:VisualElement class="dpad">
                     <ui:Button name="dir-up" class="dpad__button dpad__up" />

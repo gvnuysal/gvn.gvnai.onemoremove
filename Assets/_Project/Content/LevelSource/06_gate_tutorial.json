@@ -1,2 +1,3 @@
 { "id": "tutorial_gate_01", "name": "Kapı", "revision": 1, "tutorial": true, "parMoves": 5,
+  "tip": "Her başarılı hamlede bütün kapılar açılır ya da kapanır. Kapalı kapıya giremezsin.",
   "map": ["P.x.G"] }

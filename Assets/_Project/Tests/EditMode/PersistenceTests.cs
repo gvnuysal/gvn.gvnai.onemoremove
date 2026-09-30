@@ -180,6 +180,24 @@ namespace OneMoreMove.Tests
         }
 
         [Test]
+        public void QueuedStore_Flush_NeverReturnsBeforeTheNewestWriteLands()
+        {
+            // Regression: the worker could take the newest document just before Flush looked at the queue, and
+            // Flush returned before that write reached the disk (lost save on quit).
+            for (var run = 0; run < 200; run++)
+            {
+                var directory = Path.Combine(_directory, "run" + run);
+                var store = new QueuedSaveStore(new FileSaveStore(directory), e => Assert.Fail(e.ToString()));
+                for (var i = 1; i <= 5; i++) store.Save(SampleData(i));
+                store.Flush();
+
+                var loaded = new FileSaveStore(directory).Load();
+                Assert.That(loaded.Status, Is.EqualTo(SaveLoadStatus.Loaded), $"run {run}");
+                Assert.That(loaded.Data.ActiveSession.State.MoveCount, Is.EqualTo(3), $"run {run}");
+            }
+        }
+
+        [Test]
         public void LevelJson_ParsesTheDocumentExample()
         {
             const string json = "{ \"id\": \"tutorial_gate_01\", \"revision\": 1, \"rulesVersion\": 1, \"width\": 5, \"height\": 1, \"walls\": [], " +
@@ -207,6 +225,16 @@ namespace OneMoreMove.Tests
             Assert.That(level.KnownSolution, Is.EqualTo(new[] { Direction.Wait, Direction.Right, Direction.Right }));
             Assert.That(SolutionReplayer.Replay(level, level.KnownSolution).ReachedGoal, Is.True);
             Assert.That(LevelJson.Parse(LevelJson.ToJson(level)).KnownSolution, Is.EqualTo(level.KnownSolution));
+        }
+
+        [Test]
+        public void LevelJson_CarriesTheLevelTip()
+        {
+            var level = LevelJson.Parse("{ \"id\": \"tip_01\", \"parMoves\": 5, \"tip\": \" Bekle. \", \"map\": [\"P..xG\"] }");
+
+            Assert.That(level.Tip, Is.EqualTo("Bekle."));
+            Assert.That(LevelJson.Parse(LevelJson.ToJson(level)).Tip, Is.EqualTo("Bekle."));
+            Assert.That(LevelJson.Parse("{ \"id\": \"no_tip\", \"parMoves\": 5, \"map\": [\"PG\"] }").Tip, Is.Null);
         }
 
         [Test]

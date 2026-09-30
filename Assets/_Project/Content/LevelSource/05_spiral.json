@@ -1,0 +1,2 @@
+{ "id": "l05_spiral", "name": "Sarmal", "revision": 1, "parMoves": 15,
+  "map": ["...#.", ".#.G.", ".###.", ".#..#", "....P"] }

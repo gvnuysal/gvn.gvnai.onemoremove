@@ -24,7 +24,7 @@ namespace OneMoreMove.Persistence
                 var fromMap = AsciiLevelParser.Parse(new AsciiLevelParser.Options(), dto.Map);
                 return new LevelDefinition(dto.Id, dto.Name, dto.Revision, dto.RulesVersion, fromMap.Width, fromMap.Height,
                     fromMap.Walls, fromMap.Gates, fromMap.PlayerStart, fromMap.EchoStart, fromMap.Goal,
-                    dto.ParMoves, dto.OptimalMoves, solution, dto.Tutorial);
+                    dto.ParMoves, dto.OptimalMoves, solution, dto.Tutorial, dto.Tip);
             }
 
             if (dto.Player == null || dto.Goal == null) throw new FormatException($"Level '{dto.Id}' needs a player and a goal.");
@@ -32,7 +32,7 @@ namespace OneMoreMove.Persistence
                 (dto.Walls ?? new List<PosDto>()).Select(ToPos),
                 (dto.Gates ?? new List<GateDto>()).Select(g => new GateDefinition(new GridPos(g.X, g.Y), g.Open)),
                 ToPos(dto.Player), dto.Echo == null ? (GridPos?)null : ToPos(dto.Echo), ToPos(dto.Goal),
-                dto.ParMoves, dto.OptimalMoves, solution, dto.Tutorial);
+                dto.ParMoves, dto.OptimalMoves, solution, dto.Tutorial, dto.Tip);
         }
 
         public static string ToJson(LevelDefinition level)
@@ -44,6 +44,7 @@ namespace OneMoreMove.Persistence
                 Revision = level.Revision,
                 RulesVersion = level.RulesVersion,
                 Tutorial = level.IsTutorial,
+                Tip = level.Tip,
                 Width = level.Width,
                 Height = level.Height,
                 Walls = level.Walls.Select(w => new PosDto { X = w.X, Y = w.Y }).ToList(),
@@ -71,6 +72,7 @@ namespace OneMoreMove.Persistence
             [JsonProperty("revision")] public int Revision = 1;
             [JsonProperty("rulesVersion")] public int RulesVersion = RulesEngine.Version;
             [JsonProperty("tutorial")] public bool Tutorial;
+            [JsonProperty("tip", NullValueHandling = NullValueHandling.Ignore)] public string Tip;
             [JsonProperty("map", NullValueHandling = NullValueHandling.Ignore)] public List<string> Map;
             [JsonProperty("width")] public int Width;
             [JsonProperty("height")] public int Height;

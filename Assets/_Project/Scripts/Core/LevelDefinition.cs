@@ -35,7 +35,8 @@ namespace OneMoreMove.Core
             int parMoves,
             int? optimalMoves,
             IEnumerable<Direction> knownSolution,
-            bool isTutorial = false)
+            bool isTutorial = false,
+            string tip = null)
         {
             if (width < 1 || width > MaxDimension) throw new ArgumentOutOfRangeException(nameof(width), width, $"Width must be 1..{MaxDimension}.");
             if (height < 1 || height > MaxDimension) throw new ArgumentOutOfRangeException(nameof(height), height, $"Height must be 1..{MaxDimension}.");
@@ -55,6 +56,7 @@ namespace OneMoreMove.Core
             OptimalMoves = optimalMoves;
             KnownSolution = (knownSolution ?? Enumerable.Empty<Direction>()).ToArray();
             IsTutorial = isTutorial;
+            Tip = string.IsNullOrWhiteSpace(tip) ? null : tip.Trim();
 
             if (Gates.Count > MaxGates) throw new ArgumentException($"A level can have at most {MaxGates} gates.", nameof(gates));
 
@@ -106,6 +108,9 @@ namespace OneMoreMove.Core
         public IReadOnlyList<Direction> KnownSolution { get; }
         public bool IsTutorial { get; }
 
+        /// <summary>Optional one-line teaching text shown while the level is played (introduces a mechanic or control).</summary>
+        public string Tip { get; }
+
         public ulong InitialGateBits { get; }
         public ulong AllGatesMask { get; }
         public int CellCount => Width * Height;
@@ -130,7 +135,7 @@ namespace OneMoreMove.Core
         public LevelDefinition WithSolution(int? optimalMoves, IEnumerable<Direction> knownSolution)
         {
             return new LevelDefinition(Id, Name, Revision, RulesVersion, Width, Height, Walls, Gates, PlayerStart, EchoStart,
-                Goal, ParMoves, optimalMoves, knownSolution, IsTutorial);
+                Goal, ParMoves, optimalMoves, knownSolution, IsTutorial, Tip);
         }
     }
 }

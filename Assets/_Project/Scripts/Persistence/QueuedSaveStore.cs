@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using OneMoreMove.Session;
 
@@ -44,22 +43,15 @@ namespace OneMoreMove.Persistence
             Task.Run(Drain);
         }
 
+        /// <summary>
+        /// Returns once the newest document saved so far is on disk. A document is only ever taken from the queue while
+        /// holding the write lock, so a write the worker has started always finishes before Flush can return.
+        /// </summary>
         public void Flush()
         {
-            string json;
-            long sequence;
-            lock (_queueLock)
-            {
-                json = _pendingJson;
-                sequence = _pendingSequence;
-                _pendingJson = null;
-            }
-
-            if (json != null) Write(json, sequence);
-
-            // Wait for a write the worker may have taken just before us.
             lock (_writeLock)
             {
+                if (TakePending(out var json, out var sequence, stopDraining: false)) Write(json, sequence);
             }
         }
 
@@ -67,39 +59,38 @@ namespace OneMoreMove.Persistence
         {
             while (true)
             {
-                string json;
-                long sequence;
-                lock (_queueLock)
+                lock (_writeLock)
                 {
-                    if (_pendingJson == null)
-                    {
-                        _draining = false;
-                        return;
-                    }
-
-                    json = _pendingJson;
-                    sequence = _pendingSequence;
-                    _pendingJson = null;
+                    if (!TakePending(out var json, out var sequence, stopDraining: true)) return;
+                    Write(json, sequence);
                 }
-
-                Write(json, sequence);
             }
         }
 
+        private bool TakePending(out string json, out long sequence, bool stopDraining)
+        {
+            lock (_queueLock)
+            {
+                json = _pendingJson;
+                sequence = _pendingSequence;
+                _pendingJson = null;
+                if (json == null && stopDraining) _draining = false;
+                return json != null;
+            }
+        }
+
+        /// <summary>Caller holds <see cref="_writeLock"/>.</summary>
         private void Write(string json, long sequence)
         {
-            lock (_writeLock)
+            if (sequence <= _lastWrittenSequence) return;
+            try
             {
-                if (sequence <= Interlocked.Read(ref _lastWrittenSequence)) return;
-                try
-                {
-                    _inner.WriteText(json);
-                    Interlocked.Exchange(ref _lastWrittenSequence, sequence);
-                }
-                catch (Exception e)
-                {
-                    _onError?.Invoke(e);
-                }
+                _inner.WriteText(json);
+                _lastWrittenSequence = sequence;
+            }
+            catch (Exception e)
+            {
+                _onError?.Invoke(e);
             }
         }
     }
