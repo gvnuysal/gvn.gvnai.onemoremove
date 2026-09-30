@@ -1,0 +1,2 @@
+{ "id": "tutorial_gate_01", "name": "Kapı", "revision": 1, "tutorial": true, "parMoves": 5,
+  "map": ["P.x.G"] }

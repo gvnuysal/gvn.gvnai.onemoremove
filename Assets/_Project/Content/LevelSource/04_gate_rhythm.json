@@ -1,0 +1,2 @@
+{ "id": "l04_gate_rhythm", "name": "Kapı Ritmi", "revision": 1, "parMoves": 5,
+  "map": ["..#..", "P.x.G", "..#..", "..o..", "..#.."] }

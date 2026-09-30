@@ -1,0 +1,2 @@
+{ "id": "l02_walls", "name": "Duvar", "revision": 1, "parMoves": 8,
+  "map": [".....", "P.#.G", "..#..", "..#..", "....."] }

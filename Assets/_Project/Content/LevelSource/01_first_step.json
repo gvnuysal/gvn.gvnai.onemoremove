@@ -1,0 +1,2 @@
+{ "id": "l01_first_step", "name": "İlk Adım", "revision": 1, "tutorial": true, "parMoves": 3,
+  "map": [".....", ".....", ".P.G.", ".....", "....."] }

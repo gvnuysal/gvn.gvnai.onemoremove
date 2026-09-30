@@ -1,0 +1,20 @@
+{
+    "name": "OneMoreMove.Presentation",
+    "rootNamespace": "OneMoreMove.Presentation",
+    "references": [
+        "OneMoreMove.Core",
+        "OneMoreMove.Session",
+        "OneMoreMove.Persistence",
+        "OneMoreMove.Content",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

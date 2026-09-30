@@ -1,0 +1,19 @@
+{
+    "name": "OneMoreMove.Persistence",
+    "rootNamespace": "OneMoreMove.Persistence",
+    "references": [
+        "OneMoreMove.Core",
+        "OneMoreMove.Session"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

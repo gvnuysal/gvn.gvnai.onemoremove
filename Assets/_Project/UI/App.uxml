@@ -1,0 +1,90 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="Theme.uss" />
+    <ui:VisualElement name="app" class="app" picking-mode="Ignore">
+
+        <ui:VisualElement name="main-menu" class="screen screen--centered">
+            <ui:Label text="Bir Hamle Daha" class="title t-title" />
+            <ui:Label text="Her hamlenin bütün sonuçlarını düşün." class="subtitle t-small" />
+            <ui:Label name="menu-message" class="message t-small" />
+            <ui:VisualElement class="menu">
+                <ui:Button name="continue-button" text="Devam Et" class="menu-button t-large" />
+                <ui:Button name="levels-button" text="Bölümler" class="menu-button t-large" />
+                <ui:Button name="settings-button" text="Ayarlar" class="menu-button t-large" />
+                <ui:Button name="quit-button" text="Çıkış" class="menu-button t-large" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="level-select" class="screen screen--centered">
+            <ui:Label text="Bölümler" class="heading t-heading" />
+            <ui:ScrollView class="level-scroll">
+                <ui:VisualElement name="level-grid" class="level-grid" />
+            </ui:ScrollView>
+            <ui:Button name="level-select-back" text="Geri" class="menu-button menu-button--small t-large" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="hud" class="screen hud" picking-mode="Ignore">
+            <ui:VisualElement class="hud__top">
+                <ui:Button name="menu-button" text="Menü (Esc)" class="hud-button t-small" />
+                <ui:VisualElement class="hud__title" picking-mode="Ignore">
+                    <ui:Label name="level-name" class="t-large" picking-mode="Ignore" />
+                    <ui:Label name="move-count" class="hud__moves" picking-mode="Ignore" />
+                </ui:VisualElement>
+                <ui:Label name="undo-count" class="hud__undo-count t-small" picking-mode="Ignore" />
+            </ui:VisualElement>
+            <ui:Label name="feedback" class="feedback t-small" picking-mode="Ignore" />
+            <ui:VisualElement class="hud__bottom" picking-mode="Ignore">
+                <ui:VisualElement class="dpad">
+                    <ui:Button name="dir-up" class="dpad__button dpad__up" />
+                    <ui:VisualElement class="dpad__row" picking-mode="Ignore">
+                        <ui:Button name="dir-left" class="dpad__button" />
+                        <ui:Button name="dir-wait" class="dpad__button dpad__center" />
+                        <ui:Button name="dir-right" class="dpad__button" />
+                    </ui:VisualElement>
+                    <ui:Button name="dir-down" class="dpad__button" />
+                </ui:VisualElement>
+                <ui:VisualElement class="hud__actions" picking-mode="Ignore">
+                    <ui:Button name="undo-button" text="Geri Al (Z)" class="hud-button hud-button--primary t-large" />
+                    <ui:Button name="restart-button" text="Yeniden Başlat (R)" class="hud-button t-large" />
+                    <ui:Button name="hint-button" text="İpucu (H)" class="hud-button t-large" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="win-panel" class="overlay">
+            <ui:VisualElement class="panel">
+                <ui:Label text="Bölüm Tamamlandı" class="heading t-heading" />
+                <ui:VisualElement name="win-stars" class="stars stars--large" />
+                <ui:Label name="win-moves" class="t-large" />
+                <ui:Label name="win-best" class="t-small muted" />
+                <ui:Label name="win-note" class="t-small" />
+                <ui:VisualElement class="panel__buttons">
+                    <ui:Button name="next-button" text="Sonraki Bölüm" class="menu-button t-large" />
+                    <ui:Button name="replay-button" text="Tekrar Oyna" class="menu-button t-large" />
+                    <ui:Button name="win-levels-button" text="Bölümler" class="menu-button t-large" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="settings" class="overlay">
+            <ui:VisualElement class="panel">
+                <ui:Label text="Ayarlar" class="heading t-heading" />
+                <ui:Toggle name="reduced-motion" label="Animasyonları azalt" class="setting" />
+                <ui:Toggle name="move-preview" label="Hamle önizlemesi" class="setting" />
+                <ui:Label text="Açıkken yön düğmesinin üzerine gelince taşların gideceği yer gösterilir." class="t-small muted setting-help" />
+                <ui:DropdownField name="text-size" label="Yazı boyutu" class="setting" />
+                <ui:Button name="settings-close" text="Kapat" class="menu-button t-large" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="dialog" class="overlay">
+            <ui:VisualElement class="panel">
+                <ui:Label name="dialog-text" class="t-large dialog-text" />
+                <ui:VisualElement class="panel__buttons panel__buttons--row">
+                    <ui:Button name="dialog-cancel" text="Vazgeç" class="menu-button t-large" />
+                    <ui:Button name="dialog-confirm" text="Evet" class="menu-button menu-button--danger t-large" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

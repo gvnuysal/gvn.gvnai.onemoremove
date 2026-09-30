@@ -1,0 +1,29 @@
+{
+    "name": "OneMoreMove.Tests.EditMode",
+    "rootNamespace": "OneMoreMove.Tests",
+    "references": [
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "OneMoreMove.Core",
+        "OneMoreMove.Session",
+        "OneMoreMove.Persistence",
+        "OneMoreMove.Content",
+        "OneMoreMove.EditorTools"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "nunit.framework.dll",
+        "Newtonsoft.Json.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,312 @@
+:root {
+    --bg: #12141C;
+    --surface: #1E2230;
+    --surface-raised: #2A3044;
+    --text: #F2F4F8;
+    --muted: #A9B0C3;
+    --primary: #F5C451;
+    --primary-text: #1A1405;
+    --danger: #FF5A5A;
+    --focus: #56CCF2;
+}
+
+.app {
+    flex-grow: 1;
+    color: var(--text);
+}
+
+.screen {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.screen--centered {
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg);
+    padding: 48px;
+}
+
+.title {
+    -unity-font-style: bold;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.subtitle, .muted {
+    color: var(--muted);
+}
+
+.heading {
+    -unity-font-style: bold;
+    margin-bottom: 24px;
+    -unity-text-align: middle-center;
+}
+
+.message {
+    margin: 16px 0;
+    padding: 12px 20px;
+    max-width: 900px;
+    white-space: normal;
+    background-color: var(--surface-raised);
+    border-radius: 10px;
+    border-left-width: 6px;
+    border-left-color: var(--primary);
+}
+
+.menu {
+    margin-top: 32px;
+    align-items: stretch;
+    width: 440px;
+}
+
+/* Buttons */
+.menu-button, .hud-button {
+    background-color: var(--surface-raised);
+    color: var(--text);
+    border-width: 3px;
+    border-color: transparent;
+    border-radius: 12px;
+    padding: 10px 24px;
+    margin: 8px 0;
+    -unity-font-style: bold;
+}
+
+.menu-button:hover, .hud-button:hover, .dpad__button:hover {
+    background-color: #39415C;
+}
+
+.menu-button:active, .hud-button:active, .dpad__button:active {
+    background-color: #454F70;
+}
+
+/* Keyboard users always see where the focus is. */
+.menu-button:focus, .level-card:focus, .setting:focus {
+    border-color: var(--focus);
+}
+
+.menu-button:disabled, .hud-button:disabled {
+    opacity: 0.4;
+}
+
+.menu-button--small {
+    width: 260px;
+    margin-top: 24px;
+}
+
+.menu-button--danger {
+    background-color: #5A2328;
+}
+
+.hud-button--primary {
+    background-color: var(--primary);
+    color: var(--primary-text);
+}
+
+.hud-button--primary:hover {
+    background-color: #FFD36B;
+}
+
+.hud-button--used {
+    border-color: var(--muted);
+}
+
+/* Level select */
+.level-scroll {
+    max-width: 1300px;
+    flex-shrink: 1;
+}
+
+.level-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.level-card {
+    width: 220px;
+    height: 200px;
+    margin: 12px;
+    border-radius: 16px;
+    border-width: 3px;
+    border-color: transparent;
+    background-color: var(--surface-raised);
+    color: var(--text);
+    align-items: center;
+    justify-content: center;
+}
+
+.level-card--completed {
+    background-color: #2F3A36;
+}
+
+.level-card--locked {
+    opacity: 0.45;
+}
+
+.level-card__number {
+    -unity-font-style: bold;
+}
+
+.level-card__title {
+    white-space: normal;
+    -unity-text-align: middle-center;
+    margin-bottom: 6px;
+}
+
+.stars {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.stars .icon {
+    margin: 0 3px;
+}
+
+.stars--large {
+    margin: 16px 0;
+}
+
+/* HUD */
+.hud__top {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 28px;
+    height: 150px;
+}
+
+.hud__title {
+    align-items: center;
+}
+
+.hud__moves {
+    color: var(--primary);
+    -unity-font-style: bold;
+}
+
+.hud__undo-count {
+    color: var(--muted);
+    width: 260px;
+    -unity-text-align: middle-right;
+}
+
+.feedback {
+    align-self: center;
+    padding: 8px 20px;
+    border-radius: 10px;
+    background-color: rgba(42, 48, 68, 0.92);
+    max-width: 1100px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+}
+
+.feedback--hidden {
+    opacity: 0;
+}
+
+.hud__bottom {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 290px;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 20px 40px;
+}
+
+.hud__actions {
+    width: 420px;
+    align-items: stretch;
+}
+
+.dpad {
+    align-items: center;
+}
+
+.dpad__row {
+    flex-direction: row;
+}
+
+.dpad__button {
+    width: 82px;
+    height: 82px;
+    margin: 2px;
+    border-radius: 14px;
+    border-width: 0;
+    background-color: var(--surface-raised);
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.dpad__center {
+    border-radius: 41px;
+}
+
+/* Overlays */
+.overlay {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(8, 9, 14, 0.82);
+    align-items: center;
+    justify-content: center;
+}
+
+.panel {
+    background-color: var(--surface);
+    border-radius: 20px;
+    padding: 40px 56px;
+    min-width: 640px;
+    max-width: 1000px;
+    align-items: center;
+    border-width: 2px;
+    border-color: var(--surface-raised);
+}
+
+.panel__buttons {
+    margin-top: 24px;
+    align-items: stretch;
+    width: 440px;
+}
+
+.panel__buttons--row {
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+}
+
+.panel__buttons--row .menu-button {
+    margin: 8px 12px;
+    min-width: 200px;
+}
+
+.setting {
+    width: 100%;
+    margin: 10px 0;
+    font-size: 30px;
+    border-width: 3px;
+    border-color: transparent;
+    border-radius: 10px;
+    padding: 4px 8px;
+}
+
+.setting-help {
+    white-space: normal;
+    align-self: flex-start;
+    margin: -4px 0 12px 8px;
+}
+
+.dialog-text {
+    white-space: normal;
+    -unity-text-align: middle-center;
+    max-width: 800px;
+}
