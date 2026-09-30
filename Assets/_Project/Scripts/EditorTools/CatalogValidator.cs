@@ -82,6 +82,11 @@ namespace OneMoreMove.EditorTools
                 warnings.AddRange(LevelAnalyzer.DesignWarnings(level, analysis));
             }
 
+            // The UI ships in Turkish (the source language) and English.
+            level.Translations.TryGetValue("en", out var english);
+            if (english?.Name == null) warnings.Add("No English name (translations.en.name).");
+            if (level.Tip != null && english?.Tip == null) warnings.Add("No English tip (translations.en.tip).");
+
             return new LevelCheck(level.Id, errors, warnings, solved, analysis);
         }
 

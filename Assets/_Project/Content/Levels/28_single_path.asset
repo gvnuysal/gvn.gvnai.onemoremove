@@ -18,6 +18,10 @@ MonoBehaviour:
   rulesVersion: 2
   isTutorial: 0
   tip: 
+  translations:
+  - language: en
+    name: Single Path
+    tip: 
   width: 6
   height: 5
   walls:

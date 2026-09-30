@@ -34,7 +34,7 @@ namespace OneMoreMove.Tests
             session.AddActiveTime(42.25);
 
             var progress = new[] { new ProgressRecord("tutorial_gate_01", 1, true, 4, 3, new DateTime(2026, 9, 29, 10, 0, 0, DateTimeKind.Utc)) };
-            var settings = new GameSettings { ReducedMotion = true, ShowMovePreview = true, TextScalePercent = 125 };
+            var settings = new GameSettings { ReducedMotion = true, ShowMovePreview = true, TextScalePercent = 125, Language = "en" };
             return new SaveData(RulesEngine.Version, 3, session.ToSnapshot(), progress, settings, level.Id);
         }
 
@@ -63,6 +63,7 @@ namespace OneMoreMove.Tests
             Assert.That(progress.LastPlayedUtc, Is.EqualTo(new DateTime(2026, 9, 29, 10, 0, 0, DateTimeKind.Utc)));
             Assert.That(loaded.Data.Settings.TextScalePercent, Is.EqualTo(125));
             Assert.That(loaded.Data.Settings.ReducedMotion, Is.True);
+            Assert.That(loaded.Data.Settings.Language, Is.EqualTo("en"));
             Assert.That(loaded.Data.ContentVersion, Is.EqualTo(3));
             Assert.That(loaded.Data.LastPlayedLevelId, Is.EqualTo("echo_example"));
         }
@@ -235,6 +236,31 @@ namespace OneMoreMove.Tests
             Assert.That(level.Tip, Is.EqualTo("Bekle."));
             Assert.That(LevelJson.Parse(LevelJson.ToJson(level)).Tip, Is.EqualTo("Bekle."));
             Assert.That(LevelJson.Parse("{ \"id\": \"no_tip\", \"parMoves\": 5, \"map\": [\"PG\"] }").Tip, Is.Null);
+        }
+
+        [Test]
+        public void LevelJson_CarriesTranslations_AndFallsBackToTurkish()
+        {
+            var level = LevelJson.Parse("{ \"id\": \"t\", \"name\": \"Duvar\", \"tip\": \"Duvardan geçilmez.\", \"parMoves\": 3, " +
+                                        "\"translations\": { \"en\": { \"name\": \"Wall\" } }, \"map\": [\"P.G\"] }");
+
+            Assert.That(level.NameIn("en"), Is.EqualTo("Wall"));
+            Assert.That(level.TipIn("en"), Is.EqualTo("Duvardan geçilmez."), "A missing translation falls back to Turkish.");
+            Assert.That(level.NameIn("tr"), Is.EqualTo("Duvar"));
+            Assert.That(level.NameIn("de"), Is.EqualTo("Duvar"));
+            Assert.That(LevelJson.Parse(LevelJson.ToJson(level)).NameIn("en"), Is.EqualTo("Wall"));
+        }
+
+        [Test]
+        public void EverySeedLevel_HasEnglishText()
+        {
+            var folder = Path.Combine(UnityEngine.Application.dataPath, "_Project", "Content", "LevelSource");
+            foreach (var file in Directory.GetFiles(folder, "*.json"))
+            {
+                var level = LevelJson.Parse(File.ReadAllText(file));
+                Assert.That(level.Translations.ContainsKey("en") && level.Translations["en"].Name != null, Is.True, $"{level.Id}: English name");
+                if (level.Tip != null) Assert.That(level.Translations["en"].Tip, Is.Not.Null, $"{level.Id}: English tip");
+            }
         }
 
         [Test]

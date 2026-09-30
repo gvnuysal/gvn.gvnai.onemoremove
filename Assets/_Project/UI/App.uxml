@@ -3,8 +3,8 @@
     <ui:VisualElement name="app" class="app" picking-mode="Ignore">
 
         <ui:VisualElement name="main-menu" class="screen screen--centered">
-            <ui:Label text="Bir Hamle Daha" class="title t-title" />
-            <ui:Label text="Her hamlenin bütün sonuçlarını düşün." class="subtitle t-small" />
+            <ui:Label name="title" text="Bir Hamle Daha" class="title t-title" />
+            <ui:Label name="tagline" text="Her hamlenin bütün sonuçlarını düşün." class="subtitle t-small" />
             <ui:Label name="menu-message" class="message t-small" />
             <ui:VisualElement class="menu">
                 <ui:Button name="continue-button" text="Devam Et" class="menu-button t-large" />
@@ -15,7 +15,7 @@
         </ui:VisualElement>
 
         <ui:VisualElement name="level-select" class="screen screen--centered">
-            <ui:Label text="Bölümler" class="heading t-heading" />
+            <ui:Label name="levels-heading" text="Bölümler" class="heading t-heading" />
             <ui:ScrollView class="level-scroll">
                 <ui:VisualElement name="level-grid" class="level-grid" />
             </ui:ScrollView>
@@ -53,7 +53,7 @@
 
         <ui:VisualElement name="win-panel" class="overlay">
             <ui:VisualElement class="panel">
-                <ui:Label text="Bölüm Tamamlandı" class="heading t-heading" />
+                <ui:Label name="win-heading" text="Bölüm Tamamlandı" class="heading t-heading" />
                 <ui:VisualElement name="win-stars" class="stars stars--large" />
                 <ui:Label name="win-moves" class="t-large" />
                 <ui:Label name="win-best" class="t-small muted" />
@@ -69,10 +69,11 @@
 
         <ui:VisualElement name="settings" class="overlay">
             <ui:VisualElement class="panel">
-                <ui:Label text="Ayarlar" class="heading t-heading" />
+                <ui:Label name="settings-heading" text="Ayarlar" class="heading t-heading" />
                 <ui:Toggle name="reduced-motion" label="Animasyonları azalt" class="setting" />
                 <ui:Toggle name="move-preview" label="Hamle önizlemesi" class="setting" />
-                <ui:Label text="Açıkken bir yön düğmesine basılıyken ya da imleç üzerindeyken taşların gideceği yer gösterilir." class="t-small muted setting-help" />
+                <ui:Label name="move-preview-help" text="Açıkken bir yön düğmesine basılıyken ya da imleç üzerindeyken taşların gideceği yer gösterilir." class="t-small muted setting-help" />
+                <ui:DropdownField name="language" label="Dil" class="setting" />
                 <ui:DropdownField name="text-size" label="Yazı boyutu" class="setting" />
                 <ui:SliderInt name="sfx-volume" label="Efekt sesi" low-value="0" high-value="100" class="setting" />
                 <ui:SliderInt name="music-volume" label="Müzik" low-value="0" high-value="100" class="setting" />

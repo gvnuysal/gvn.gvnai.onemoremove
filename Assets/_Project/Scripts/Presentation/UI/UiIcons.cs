@@ -41,7 +41,7 @@ namespace OneMoreMove.Presentation.UI
                 container.Add(star);
             }
 
-            container.tooltip = $"{stars}/3 yıldız";
+            container.tooltip = Strings.Stars(stars);
         }
     }
 }

@@ -166,7 +166,8 @@ namespace OneMoreMove.Persistence
                     ShowMovePreview = s.ShowMovePreview,
                     TextScalePercent = s.TextScalePercent,
                     SfxVolume = s.SfxVolume,
-                    MusicVolume = s.MusicVolume
+                    MusicVolume = s.MusicVolume,
+                    Language = s.Language
                 }
             };
         }
@@ -189,7 +190,8 @@ namespace OneMoreMove.Persistence
                 ShowMovePreview = dto.Settings.ShowMovePreview,
                 TextScalePercent = dto.Settings.TextScalePercent,
                 SfxVolume = dto.Settings.SfxVolume,
-                MusicVolume = dto.Settings.MusicVolume
+                MusicVolume = dto.Settings.MusicVolume,
+                Language = dto.Settings.Language
             };
             settings.Normalize();
 

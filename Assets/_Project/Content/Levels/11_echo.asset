@@ -19,6 +19,11 @@ MonoBehaviour:
   isTutorial: 0
   tip: "Yank\u0131 her hamlede senin tam tersine gider. Hedefe yaln\u0131zca senin
     ula\u015Fman gerekir."
+  translations:
+  - language: en
+    name: Echo
+    tip: The echo always moves exactly opposite to you. Only you need to reach the
+      goal.
   width: 5
   height: 5
   walls:

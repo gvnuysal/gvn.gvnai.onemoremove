@@ -17,6 +17,7 @@ namespace OneMoreMove.Presentation.UI
         private readonly Label _undoCount;
         private readonly Label _feedback;
         private readonly Label _tip;
+        private readonly VisualElement _root;
         private readonly Button _undo;
         private readonly Button _hint;
 
@@ -39,19 +40,10 @@ namespace OneMoreMove.Presentation.UI
 
             foreach (var button in new[] { _undo, _hint, restart, menu }) button.focusable = false;
 
-            if (Application.isMobilePlatform)
-            {
-                menu.text = Strings.MenuButtonTouch;
-                _undo.text = Strings.UndoButtonTouch;
-                restart.text = Strings.RestartButtonTouch;
-                _hint.text = Strings.HintButtonTouch;
-            }
-
             foreach (var direction in Directions.All)
             {
                 var button = Find<Button>(root, "dir-" + direction.ToString().ToLowerInvariant());
                 button.focusable = false;
-                button.tooltip = Strings.DirectionName(direction);
                 button.Add(UiIcons.Icon(Shape.Arrow, Palette.Primary, 44f, UiIcons.Rotation(direction)));
                 button.clicked += () => DirectionClicked?.Invoke(direction);
                 button.RegisterCallback<PointerEnterEvent>(_ => DirectionHovered?.Invoke(direction));
@@ -60,13 +52,25 @@ namespace OneMoreMove.Presentation.UI
 
             var wait = Find<Button>(root, "dir-wait");
             wait.focusable = false;
-            wait.tooltip = Strings.DirectionName(Direction.Wait) + (Application.isMobilePlatform ? string.Empty : " (Boşluk)");
             wait.Add(UiIcons.Icon(Shape.Wait, Palette.Primary, 36f));
             wait.clicked += () => DirectionClicked?.Invoke(Direction.Wait);
             wait.RegisterCallback<PointerEnterEvent>(_ => DirectionHovered?.Invoke(Direction.Wait));
             wait.RegisterCallback<PointerLeaveEvent>(_ => DirectionUnhovered?.Invoke());
 
+            _root = root;
+            ApplyLanguage();
             SetFeedback(null);
+        }
+
+        /// <summary>Tooltips double as the screen-reader names of the icon-only d-pad buttons.</summary>
+        public void ApplyLanguage()
+        {
+            foreach (var direction in Directions.All)
+            {
+                Find<Button>(_root, "dir-" + direction.ToString().ToLowerInvariant()).tooltip = Strings.DirectionName(direction);
+            }
+
+            Find<Button>(_root, "dir-wait").tooltip = Strings.WithKey(Strings.DirectionName(Direction.Wait), Strings.SpaceKey);
         }
 
         public event Action<Direction> DirectionClicked;
@@ -81,14 +85,14 @@ namespace OneMoreMove.Presentation.UI
         {
             if (session == null) return;
 
-            _levelName.text = $"{Strings.LevelNumber(levelIndex)}. {session.Level.Name}";
+            _levelName.text = $"{Strings.LevelNumber(levelIndex)}. {session.Level.NameIn(Localization.Code)}";
             _moves.text = Strings.Moves(session.State.MoveCount);
             _undoCount.text = Strings.UndoAvailable(session.CanUndo ? session.History.Count : 0);
             _undo.SetEnabled(session.CanUndo);
             _hint.SetEnabled(!session.IsWon && !hintPending);
             _hint.EnableInClassList("hud-button--used", session.HintUsed);
 
-            var tip = session.IsWon ? null : session.Level.Tip;
+            var tip = session.IsWon ? null : session.Level.TipIn(Localization.Code);
             _tip.text = tip ?? string.Empty;
             _tip.EnableInClassList("level-tip--hidden", string.IsNullOrEmpty(tip));
         }

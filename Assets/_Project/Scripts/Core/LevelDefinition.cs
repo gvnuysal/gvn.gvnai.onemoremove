@@ -4,6 +4,19 @@ using System.Linq;
 
 namespace OneMoreMove.Core
 {
+    /// <summary>A level's player-facing text in one language.</summary>
+    public sealed class LevelText
+    {
+        public LevelText(string name, string tip)
+        {
+            Name = string.IsNullOrWhiteSpace(name) ? null : name.Trim();
+            Tip = string.IsNullOrWhiteSpace(tip) ? null : tip.Trim();
+        }
+
+        public string Name { get; }
+        public string Tip { get; }
+    }
+
     /// <summary>
     /// Immutable, engine-independent description of a level. It may hold structurally invalid data
     /// (for example a wall outside the board) so that <see cref="LevelValidator"/> can report it;
@@ -36,7 +49,8 @@ namespace OneMoreMove.Core
             int? optimalMoves,
             IEnumerable<Direction> knownSolution,
             bool isTutorial = false,
-            string tip = null)
+            string tip = null,
+            IReadOnlyDictionary<string, LevelText> translations = null)
         {
             if (width < 1 || width > MaxDimension) throw new ArgumentOutOfRangeException(nameof(width), width, $"Width must be 1..{MaxDimension}.");
             if (height < 1 || height > MaxDimension) throw new ArgumentOutOfRangeException(nameof(height), height, $"Height must be 1..{MaxDimension}.");
@@ -57,6 +71,9 @@ namespace OneMoreMove.Core
             KnownSolution = (knownSolution ?? Enumerable.Empty<Direction>()).ToArray();
             IsTutorial = isTutorial;
             Tip = string.IsNullOrWhiteSpace(tip) ? null : tip.Trim();
+            Translations = translations != null
+                ? new Dictionary<string, LevelText>(translations.ToDictionary(t => t.Key, t => t.Value), StringComparer.Ordinal)
+                : new Dictionary<string, LevelText>(StringComparer.Ordinal);
 
             if (Gates.Count > MaxGates) throw new ArgumentException($"A level can have at most {MaxGates} gates.", nameof(gates));
 
@@ -111,6 +128,19 @@ namespace OneMoreMove.Core
         /// <summary>Optional one-line teaching text shown while the level is played (introduces a mechanic or control).</summary>
         public string Tip { get; }
 
+        /// <summary>
+        /// <see cref="Name"/> and <see cref="Tip"/> are in the source language (Turkish); other languages by code ("en").
+        /// </summary>
+        public IReadOnlyDictionary<string, LevelText> Translations { get; }
+
+        /// <summary>The name in <paramref name="language"/>, falling back to the source language.</summary>
+        public string NameIn(string language) =>
+            language != null && Translations.TryGetValue(language, out var text) && text.Name != null ? text.Name : Name;
+
+        /// <summary>The tip in <paramref name="language"/>, falling back to the source language; null when the level has none.</summary>
+        public string TipIn(string language) =>
+            Tip == null ? null : language != null && Translations.TryGetValue(language, out var text) && text.Tip != null ? text.Tip : Tip;
+
         public ulong InitialGateBits { get; }
         public ulong AllGatesMask { get; }
         public int CellCount => Width * Height;
@@ -135,7 +165,7 @@ namespace OneMoreMove.Core
         public LevelDefinition WithSolution(int? optimalMoves, IEnumerable<Direction> knownSolution)
         {
             return new LevelDefinition(Id, Name, Revision, RulesVersion, Width, Height, Walls, Gates, PlayerStart, EchoStart,
-                Goal, ParMoves, optimalMoves, knownSolution, IsTutorial, Tip);
+                Goal, ParMoves, optimalMoves, knownSolution, IsTutorial, Tip, Translations);
         }
     }
 }

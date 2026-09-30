@@ -1,2 +1,3 @@
 { "id": "l18_echo_trap", "name": "Yankı Tuzağı", "revision": 1, "parMoves": 12,
+  "translations": { "en": {"name": "Echo Trap"} },
   "map": [".#...", "#G.#x", "o##Px", ".#...", "...#E"] }

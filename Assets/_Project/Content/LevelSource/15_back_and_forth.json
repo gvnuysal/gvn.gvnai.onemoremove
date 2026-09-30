@@ -1,2 +1,3 @@
 { "id": "l15_back_and_forth", "name": "Gel-Git", "revision": 1, "parMoves": 13,
+  "translations": { "en": {"name": "Back and Forth"} },
   "map": [".#...", "G##..", ".#...", "..##.", ".E.P."] }

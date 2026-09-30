@@ -1,3 +1,4 @@
 { "id": "l12_drag_the_echo", "name": "Yankıyı Sürükle", "revision": 1, "parMoves": 10,
   "tip": "Yankının önü kapalıysa yerinde kalır. Bunu onu istediğin yere götürmek için kullan.",
+  "translations": { "en": {"name": "Drag the Echo", "tip": "When the echo's way is blocked it stays put. Use this to take it where you want."} },
   "map": ["#.EG#", ".#P#.", "....#", ".....", "....."] }

@@ -1,2 +1,3 @@
 { "id": "l26_narrow_pass", "name": "Dar Geçit", "revision": 1, "parMoves": 12,
+  "translations": { "en": {"name": "Narrow Pass"} },
   "map": [".#.x#.", "Po.#.x", ".#o..E", "#.#.#.", ".#..G."] }

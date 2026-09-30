@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using OneMoreMove.Core;
+using static OneMoreMove.Presentation.Localization;
 
 namespace OneMoreMove.Presentation
 {
@@ -14,22 +15,23 @@ namespace OneMoreMove.Presentation
         {
             var parts = new List<string>
             {
-                $"Tahta {level.Width} sütun, {level.Height} satır.",
-                $"Taşın {Cell(state.Player)}.",
-                $"Hedef {Cell(level.Goal)}."
+                L($"Tahta {level.Width} sütun, {level.Height} satır.", $"Board {level.Width} columns, {level.Height} rows."),
+                L($"Taşın {Cell(state.Player)}.", $"Your piece {Cell(state.Player)}."),
+                L($"Hedef {Cell(level.Goal)}.", $"Goal {Cell(level.Goal)}.")
             };
 
-            if (state.Echo.HasValue) parts.Add($"Yankı {Cell(state.Echo.Value)}.");
+            if (state.Echo.HasValue) parts.Add(L($"Yankı {Cell(state.Echo.Value)}.", $"Echo {Cell(state.Echo.Value)}."));
 
             var neighbours = Directions.All
                 .Select(d => (Direction: d, Cell: state.Player.Step(d)))
                 .Select(n => $"{Strings.DirectionName(n.Direction)}: {Describe(level, state, n.Cell)}");
-            parts.Add("Çevren: " + string.Join(", ", neighbours) + ".");
+            parts.Add(L("Çevren: ", "Around you: ") + string.Join(", ", neighbours) + ".");
 
             if (level.Gates.Count > 0)
             {
                 var open = Enumerable.Range(0, level.Gates.Count).Count(state.IsGateOpen);
-                parts.Add($"Kapılar: {open} açık, {level.Gates.Count - open} kapalı.");
+                var closed = level.Gates.Count - open;
+                parts.Add(L($"Kapılar: {open} açık, {closed} kapalı.", $"Gates: {open} open, {closed} closed."));
             }
 
             return string.Join(" ", parts);
@@ -46,8 +48,8 @@ namespace OneMoreMove.Presentation
                 switch (e.Type)
                 {
                     case MoveEventType.EchoBlocked: parts.Add(Strings.EchoBlocked(e.EchoBlockReason) + "."); break;
-                    case MoveEventType.GatesToggled: parts.Add("Kapılar değişti."); break;
-                    case MoveEventType.LevelWon: parts.Add("Bölüm tamamlandı."); break;
+                    case MoveEventType.GatesToggled: parts.Add(L("Kapılar değişti.", "Gates changed.")); break;
+                    case MoveEventType.LevelWon: parts.Add(L("Bölüm tamamlandı.", "Level complete.")); break;
                 }
             }
 
@@ -56,15 +58,18 @@ namespace OneMoreMove.Presentation
 
         private static string Describe(LevelDefinition level, BoardState state, GridPos cell)
         {
-            if (!level.InBounds(cell)) return "kenar";
-            if (level.IsWall(cell)) return "duvar";
-            if (state.Echo == cell) return "yankı";
+            if (!level.InBounds(cell)) return L("kenar", "edge");
+            if (level.IsWall(cell)) return L("duvar", "wall");
+            if (state.Echo == cell) return L("yankı", "echo");
 
             var gate = level.GateIndexAt(cell);
-            var what = gate >= 0 ? (state.IsGateOpen(gate) ? "açık kapı" : "kapalı kapı") : "boş";
-            return cell == level.Goal ? what + " hedef" : what;
+            var what = gate >= 0
+                ? (state.IsGateOpen(gate) ? L("açık kapı", "open gate") : L("kapalı kapı", "closed gate"))
+                : L("boş", "empty");
+            return cell == level.Goal ? what + L(" hedef", ", goal") : what;
         }
 
-        private static string Cell(GridPos cell) => $"{cell.X + 1}. sütun {cell.Y + 1}. satırda";
+        private static string Cell(GridPos cell) =>
+            L($"{cell.X + 1}. sütun {cell.Y + 1}. satırda", $"at column {cell.X + 1}, row {cell.Y + 1}");
     }
 }

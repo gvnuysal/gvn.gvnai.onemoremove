@@ -1,2 +1,3 @@
 { "id": "l25_labyrinth", "name": "Dolambaçlı Yankı", "revision": 1, "parMoves": 24,
+  "translations": { "en": {"name": "Winding Echo"} },
   "map": ["..x#P.", "...#..", "G#.x#E", "..#oo.", ".#.#.#", "....#."] }

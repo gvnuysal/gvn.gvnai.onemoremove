@@ -1,2 +1,3 @@
 { "id": "l28_single_path", "name": "Tek Yol", "revision": 1, "parMoves": 14,
+  "translations": { "en": {"name": "Single Path"} },
   "map": ["..E.#.", "##x#.x", "...#oG", ".#.##.", "P#...."] }

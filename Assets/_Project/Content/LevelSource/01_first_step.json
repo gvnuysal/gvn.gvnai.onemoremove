@@ -1,3 +1,4 @@
 { "id": "l01_first_step", "name": "İlk Adım", "revision": 1, "tutorial": true, "parMoves": 3,
   "tip": "Taşını kaydırarak, yön düğmeleriyle ya da ok tuşlarıyla hareket ettir ve hedef kareye ulaş.",
+  "translations": { "en": {"name": "First Step", "tip": "Move your piece by swiping, with the direction buttons or the arrow keys, and reach the goal."} },
   "map": [".....", ".....", ".P.G.", ".....", "....."] }

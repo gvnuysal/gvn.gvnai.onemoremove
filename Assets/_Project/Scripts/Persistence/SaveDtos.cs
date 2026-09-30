@@ -66,5 +66,6 @@ namespace OneMoreMove.Persistence
         [JsonProperty("textScalePercent")] public int TextScalePercent = 100;
         [JsonProperty("sfxVolume")] public float SfxVolume = 1f;
         [JsonProperty("musicVolume")] public float MusicVolume = 0.6f;
+        [JsonProperty("language", NullValueHandling = NullValueHandling.Ignore)] public string Language;
     }
 }

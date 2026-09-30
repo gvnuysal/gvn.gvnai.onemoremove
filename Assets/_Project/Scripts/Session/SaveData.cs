@@ -72,6 +72,9 @@ namespace OneMoreMove.Session
         public float SfxVolume { get; set; } = 1f;
         public float MusicVolume { get; set; } = 0.6f;
 
+        /// <summary>UI language code ("tr", "en"); null follows the device language.</summary>
+        public string Language { get; set; }
+
         public GameSettings Clone() => (GameSettings)MemberwiseClone();
 
         public void Normalize()
@@ -79,6 +82,7 @@ namespace OneMoreMove.Session
             TextScalePercent = Math.Max(MinTextScalePercent, Math.Min(MaxTextScalePercent, TextScalePercent));
             SfxVolume = Math.Max(0f, Math.Min(1f, SfxVolume));
             MusicVolume = Math.Max(0f, Math.Min(1f, MusicVolume));
+            if (Language != null && Language != "tr" && Language != "en") Language = null;
         }
     }
 

@@ -120,7 +120,8 @@ namespace OneMoreMove.Core.Solving
 
         private static LevelDefinition Copy(LevelDefinition level, IEnumerable<GateDefinition> gates, GridPos? echo) =>
             new LevelDefinition(level.Id, level.Name, level.Revision, level.RulesVersion, level.Width, level.Height, level.Walls,
-                gates, level.PlayerStart, echo, level.Goal, level.ParMoves, null, null, level.IsTutorial, level.Tip);
+                gates, level.PlayerStart, echo, level.Goal, level.ParMoves, null, null, level.IsTutorial, level.Tip,
+                level.Translations);
 
         private static int CountEchoBlocks(LevelDefinition level, IReadOnlyList<Direction> path)
         {

@@ -1,2 +1,3 @@
 { "id": "l21_crossroads", "name": "Kavşak", "revision": 1, "parMoves": 17,
+  "translations": { "en": {"name": "Crossroads"} },
   "map": [".P#..#", ".....#", "##Ex#.", "..#o.#", ".#.#..", "..#G.."] }

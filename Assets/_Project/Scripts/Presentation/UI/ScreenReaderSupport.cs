@@ -167,7 +167,7 @@ namespace OneMoreMove.Presentation.UI
                     break;
                 case Toggle toggle:
                     node.role = AccessibilityRole.Toggle;
-                    node.value = toggle.value ? "açık" : "kapalı";
+                    node.value = toggle.value ? Strings.On : Strings.Off;
                     if (toggle.value) node.state |= AccessibilityState.Selected;
                     node.invoked += () =>
                     {
@@ -184,7 +184,7 @@ namespace OneMoreMove.Presentation.UI
                 case DropdownField dropdown:
                     node.role = AccessibilityRole.Button;
                     node.value = dropdown.value;
-                    node.hint = "Değiştirmek için iki kez dokun.";
+                    node.hint = Strings.ChangeHint;
                     node.invoked += () =>
                     {
                         if (dropdown.choices.Count > 0) dropdown.index = (dropdown.index + 1) % dropdown.choices.Count;

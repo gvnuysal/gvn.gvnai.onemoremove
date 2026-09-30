@@ -1,2 +1,3 @@
 { "id": "l05_spiral", "name": "Sarmal", "revision": 1, "parMoves": 15,
+  "translations": { "en": {"name": "Spiral"} },
   "map": ["...#.", ".#.G.", ".###.", ".#..#", "....P"] }

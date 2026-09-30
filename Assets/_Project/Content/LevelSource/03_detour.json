@@ -1,2 +1,3 @@
 { "id": "l03_detour", "name": "Dolambaç", "revision": 1, "parMoves": 7,
+  "translations": { "en": {"name": "Detour"} },
   "map": ["#....", "....#", "##.G#", "#P#..", "....#"] }

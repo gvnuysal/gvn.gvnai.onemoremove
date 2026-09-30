@@ -38,7 +38,7 @@ namespace OneMoreMove.Presentation.UI
         {
             UiIcons.FillStars(_stars, outcome.Stars, 64f);
             _moves.text = Strings.MovesResult(outcome.Moves, parMoves);
-            _best.text = Strings.BestMoves(outcome.BestMoves) + (outcome.IsNewBestMoves && !outcome.IsFirstCompletion ? "  (yeni rekor)" : string.Empty);
+            _best.text = Strings.BestMoves(outcome.BestMoves) + (outcome.IsNewBestMoves && !outcome.IsFirstCompletion ? $"  ({Strings.NewRecord})" : string.Empty);
             _note.text = hasNext ? string.Empty : Strings.AllLevelsComplete;
             _note.style.display = hasNext ? DisplayStyle.None : DisplayStyle.Flex;
             _next.style.display = hasNext ? DisplayStyle.Flex : DisplayStyle.None;

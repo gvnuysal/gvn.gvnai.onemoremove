@@ -1,2 +1,3 @@
 { "id": "l27_corner_gate", "name": "Köşe Kapısı", "revision": 1, "parMoves": 13,
+  "translations": { "en": {"name": "Corner Gate"} },
   "map": ["G...o", "oE#.#", "#.x##", "P#.#.", "...##"] }

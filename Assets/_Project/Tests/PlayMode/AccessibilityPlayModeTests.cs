@@ -16,6 +16,17 @@ namespace OneMoreMove.Tests
 {
     public sealed class AccessibilityPlayModeTests
     {
+        // The expected texts below are Turkish; the device language of the test machine must not matter.
+        [SetUp]
+        public void SetUp()
+        {
+            Localization.DeviceLanguageOverride = SystemLanguage.Turkish;
+            Localization.Set(Language.Turkish);
+        }
+
+        [TearDown]
+        public void TearDown() => Localization.DeviceLanguageOverride = null;
+
         private static Dictionary<string, Color> ThemeColors()
         {
             var uss = File.ReadAllText(Path.Combine(Application.dataPath, "_Project", "UI", "Theme.uss"));

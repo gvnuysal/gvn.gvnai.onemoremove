@@ -1,3 +1,4 @@
 { "id": "l08_wait", "name": "Bekle", "revision": 1, "tutorial": true, "parMoves": 7,
   "tip": "Ortadaki düğme, taşına dokunmak ya da Boşluk tuşu: yerinde bekle. Beklediğinde de kapılar değişir.",
+  "translations": { "en": {"name": "Wait", "tip": "The middle button, tapping your piece or the Space key: wait in place. Waiting changes the gates too."} },
   "map": ["P..xG"] }

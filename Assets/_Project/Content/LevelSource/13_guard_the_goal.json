@@ -1,3 +1,4 @@
 { "id": "l13_guard_the_goal", "name": "Hedefi Koru", "revision": 1, "parMoves": 8,
   "tip": "Yankının durduğu kareye giremezsin. Hedefin üstüne geçerse yolunu keser; o zaman geri al.",
+  "translations": { "en": {"name": "Guard the Goal", "tip": "You cannot enter the echo's cell. If it moves onto the goal it blocks your way; then undo."} },
   "map": ["EG...", "##...", "...#.", ".#.#.", "#P.#."] }

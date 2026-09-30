@@ -19,6 +19,11 @@ MonoBehaviour:
   isTutorial: 0
   tip: "Kap\u0131ya vard\u0131\u011F\u0131nda ne durumda olaca\u011F\u0131n\u0131
     d\xFC\u015F\xFCn. \xDCst\xFCndeyken kapanan kap\u0131dan yine de \xE7\u0131kabilirsin."
+  translations:
+  - language: en
+    name: Gate Rhythm
+    tip: Think about the state a gate will be in when you arrive. You can still leave
+      a gate that closes under you.
   width: 5
   height: 5
   walls:

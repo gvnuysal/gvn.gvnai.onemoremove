@@ -49,7 +49,7 @@ namespace OneMoreMove.Presentation.UI
                 number.AddToClassList("t-heading");
                 button.Add(number);
 
-                var title = new Label(unlocked ? level.Name : Strings.Locked) { pickingMode = PickingMode.Ignore };
+                var title = new Label(unlocked ? level.NameIn(Localization.Code) : Strings.Locked) { pickingMode = PickingMode.Ignore };
                 title.AddToClassList("level-card__title");
                 title.AddToClassList("t-small");
                 button.Add(title);

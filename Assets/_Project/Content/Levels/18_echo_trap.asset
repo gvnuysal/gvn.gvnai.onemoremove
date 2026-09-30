@@ -18,6 +18,10 @@ MonoBehaviour:
   rulesVersion: 2
   isTutorial: 0
   tip: 
+  translations:
+  - language: en
+    name: Echo Trap
+    tip: 
   width: 5
   height: 5
   walls:

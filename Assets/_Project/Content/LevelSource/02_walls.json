@@ -1,3 +1,4 @@
 { "id": "l02_walls", "name": "Duvar", "revision": 1, "parMoves": 8,
   "tip": "Duvarlardan geçilemez. Yanlış bir hamleyi Geri Al ile geri alabilirsin.",
+  "translations": { "en": {"name": "Wall", "tip": "You cannot pass through walls. Take back a wrong move with Undo."} },
   "map": [".....", "P.#.G", "..#..", "..#..", "....."] }

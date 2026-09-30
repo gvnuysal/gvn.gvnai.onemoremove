@@ -19,6 +19,11 @@ MonoBehaviour:
   isTutorial: 1
   tip: "Her ba\u015Far\u0131l\u0131 hamlede b\xFCt\xFCn kap\u0131lar a\xE7\u0131l\u0131r
     ya da kapan\u0131r. Kapal\u0131 kap\u0131ya giremezsin."
+  translations:
+  - language: en
+    name: Gate
+    tip: Every successful move opens or closes every gate. You cannot enter a closed
+      gate.
   width: 5
   height: 1
   walls: []

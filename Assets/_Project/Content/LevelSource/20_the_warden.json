@@ -1,2 +1,3 @@
 { "id": "l20_the_warden", "name": "Bekçi", "revision": 1, "parMoves": 18,
+  "translations": { "en": {"name": "The Warden"} },
   "map": ["GE.xx", "##P.x", "...#.", "#.#.#", "....#"] }

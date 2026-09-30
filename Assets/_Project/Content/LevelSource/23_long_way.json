@@ -1,2 +1,3 @@
 { "id": "l23_long_way", "name": "Uzun Yol", "revision": 1, "parMoves": 20,
+  "translations": { "en": {"name": "The Long Way"} },
   "map": ["oo.#.#.", ".##....", "Px.###.", "##GE..#", "...x..#"] }

@@ -53,6 +53,7 @@ All 30 levels have at most 2 optimal solutions from slot 21 on (mastery: exactly
   otherwise that mechanic is decoration (the old `04/07` gate).
 - Levels before 08 must not reward waiting (`noWait == opt`): Wait is visible from level 1 but only taught at 08.
   LevelLab's `gate-rhythm` profile enforces this.
+- Every level needs an English name (and tip, if it has one) under `translations.en`; the catalog gate warns otherwise.
 - `tip` (optional, JSON) is a one-line teaching text shown in the HUD while the level is played. Use it where a
   control or rule is introduced, not as a hint.
 

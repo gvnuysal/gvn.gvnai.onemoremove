@@ -1,2 +1,3 @@
 { "id": "l17_timing", "name": "Zamanlama", "revision": 1, "parMoves": 10,
+  "translations": { "en": {"name": "Timing"} },
   "map": ["#....#", "...E#.", "...G.#", ".###x.", "..#.xP"] }

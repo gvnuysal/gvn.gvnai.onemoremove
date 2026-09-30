@@ -1,2 +1,3 @@
 { "id": "l29_three_breaths", "name": "Üç Nefes", "revision": 1, "parMoves": 15,
+  "translations": { "en": {"name": "Three Breaths"} },
   "map": ["#o.E.", "Po#G#", "x##x.", ".####", "....x"] }

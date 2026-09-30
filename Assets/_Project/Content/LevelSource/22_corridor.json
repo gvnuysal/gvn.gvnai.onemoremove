@@ -1,2 +1,3 @@
 { "id": "l22_corridor", "name": "Dehliz", "revision": 1, "parMoves": 18,
+  "translations": { "en": {"name": "Corridor"} },
   "map": ["..GE#Po", "..#xx.#", "...##.#", "#.x..#.", "...#.##"] }

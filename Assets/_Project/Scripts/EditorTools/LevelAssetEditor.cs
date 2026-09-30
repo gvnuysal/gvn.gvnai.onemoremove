@@ -30,7 +30,7 @@ namespace OneMoreMove.EditorTools
         }
 
         private static readonly string[] ToolNames = { "Zemin", "Duvar", "Kapı (açık)", "Kapı (kapalı)", "Oyuncu", "Yankı", "Hedef", "Yankıyı sil" };
-        private static readonly string[] MetaFields = { "id", "displayName", "revision", "rulesVersion", "isTutorial", "tip", "parMoves" };
+        private static readonly string[] MetaFields = { "id", "displayName", "revision", "rulesVersion", "isTutorial", "tip", "translations", "parMoves" };
 
         private Tool _tool = Tool.Wall;
         private BoardState _playState;
@@ -73,7 +73,7 @@ namespace OneMoreMove.EditorTools
             bool Inside(GridPos p) => p.X < width && p.Y < height;
             Apply(new LevelDefinition(level.Id, level.Name, level.Revision, level.RulesVersion, width, height,
                 level.Walls.Where(Inside), level.Gates.Where(g => Inside(g.Position)), level.PlayerStart,
-                level.EchoStart, level.Goal, level.ParMoves, null, null, level.IsTutorial, level.Tip), "Resize level");
+                level.EchoStart, level.Goal, level.ParMoves, null, null, level.IsTutorial, level.Tip, level.Translations), "Resize level");
         }
 
         private void DrawGrid(LevelDefinition level)
@@ -181,7 +181,7 @@ namespace OneMoreMove.EditorTools
 
             // Any board change invalidates the proven optimum and the stored solution.
             Apply(new LevelDefinition(level.Id, level.Name, level.Revision, level.RulesVersion, level.Width, level.Height,
-                walls, gates, player, echo, goal, level.ParMoves, null, null, level.IsTutorial, level.Tip), "Paint level");
+                walls, gates, player, echo, goal, level.ParMoves, null, null, level.IsTutorial, level.Tip, level.Translations), "Paint level");
             SetStatus("Tahta değişti: çözüm ve optimum silindi. Yayınlanmış bir bölümse Revision değerini artırın.", MessageType.Warning);
         }
 

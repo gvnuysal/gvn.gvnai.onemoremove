@@ -1,3 +1,4 @@
 { "id": "tutorial_gate_01", "name": "Kapı", "revision": 1, "tutorial": true, "parMoves": 5,
   "tip": "Her başarılı hamlede bütün kapılar açılır ya da kapanır. Kapalı kapıya giremezsin.",
+  "translations": { "en": {"name": "Gate", "tip": "Every successful move opens or closes every gate. You cannot enter a closed gate."} },
   "map": ["P.x.G"] }

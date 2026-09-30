@@ -19,6 +19,10 @@ MonoBehaviour:
   isTutorial: 0
   tip: "Kapal\u0131 kap\u0131 yank\u0131y\u0131 da durdurur. Bekleyerek kap\u0131lar\u0131n
     zaman\u0131n\u0131 ayarlayabilirsin."
+  translations:
+  - language: en
+    name: Gate and Echo
+    tip: A closed gate stops the echo too. Waiting lets you time the gates.
   width: 5
   height: 5
   walls:

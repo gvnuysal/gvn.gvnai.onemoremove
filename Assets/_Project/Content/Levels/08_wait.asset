@@ -19,6 +19,11 @@ MonoBehaviour:
   isTutorial: 1
   tip: "Ortadaki d\xFC\u011Fme, ta\u015F\u0131na dokunmak ya da Bo\u015Fluk tu\u015Fu:
     yerinde bekle. Bekledi\u011Finde de kap\u0131lar de\u011Fi\u015Fir."
+  translations:
+  - language: en
+    name: Wait
+    tip: 'The middle button, tapping your piece or the Space key: wait in place.
+      Waiting changes the gates too.'
   width: 5
   height: 1
   walls: []

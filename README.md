@@ -76,6 +76,17 @@ The game talks to it through `CloudSync` (offline-first: every call returns null
 `HttpRemoteService`. Set `GameBootstrap.serverUrl` (HTTPS) to enable cloud save and world rankings; empty keeps the
 game fully offline, which is the default.
 
+## Localization (Turkish, English)
+
+- Every UI text is written once in `Strings` as `L("Türkçe", "English")` (`Localization`), so a missing translation is a
+  compile error. `UiTexts` writes them into App.uxml (whose Turkish texts are only a UI Builder preview).
+- Level names and tips: Turkish in `name`/`tip` (source language), others in `translations`, e.g.
+  `"translations": { "en": { "name": "Wall", "tip": "…" } }`. Missing text falls back to Turkish; the catalog gate
+  warns when English is missing.
+- The language follows the device (Turkish device → Turkish, otherwise English) until the player picks one in
+  Settings; the choice is saved and applied to every screen at once.
+- `LocalizationTests` fail if an English text contains Turkish letters, i.e. if anything escaped translation.
+
 ## Accessibility
 
 - Contrast: UI text ≥ 4.5:1, focus ring and every board element ≥ 3:1 against the floor (WCAG 1.4.11); enforced by

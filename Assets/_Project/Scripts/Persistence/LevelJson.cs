@@ -24,7 +24,7 @@ namespace OneMoreMove.Persistence
                 var fromMap = AsciiLevelParser.Parse(new AsciiLevelParser.Options(), dto.Map);
                 return new LevelDefinition(dto.Id, dto.Name, dto.Revision, dto.RulesVersion, fromMap.Width, fromMap.Height,
                     fromMap.Walls, fromMap.Gates, fromMap.PlayerStart, fromMap.EchoStart, fromMap.Goal,
-                    dto.ParMoves, dto.OptimalMoves, solution, dto.Tutorial, dto.Tip);
+                    dto.ParMoves, dto.OptimalMoves, solution, dto.Tutorial, dto.Tip, Translations(dto));
             }
 
             if (dto.Player == null || dto.Goal == null) throw new FormatException($"Level '{dto.Id}' needs a player and a goal.");
@@ -32,7 +32,7 @@ namespace OneMoreMove.Persistence
                 (dto.Walls ?? new List<PosDto>()).Select(ToPos),
                 (dto.Gates ?? new List<GateDto>()).Select(g => new GateDefinition(new GridPos(g.X, g.Y), g.Open)),
                 ToPos(dto.Player), dto.Echo == null ? (GridPos?)null : ToPos(dto.Echo), ToPos(dto.Goal),
-                dto.ParMoves, dto.OptimalMoves, solution, dto.Tutorial, dto.Tip);
+                dto.ParMoves, dto.OptimalMoves, solution, dto.Tutorial, dto.Tip, Translations(dto));
         }
 
         public static string ToJson(LevelDefinition level)
@@ -45,6 +45,9 @@ namespace OneMoreMove.Persistence
                 RulesVersion = level.RulesVersion,
                 Tutorial = level.IsTutorial,
                 Tip = level.Tip,
+                Translations = level.Translations.Count == 0
+                    ? null
+                    : level.Translations.ToDictionary(t => t.Key, t => new TextDto { Name = t.Value.Name, Tip = t.Value.Tip }),
                 Width = level.Width,
                 Height = level.Height,
                 Walls = level.Walls.Select(w => new PosDto { X = w.X, Y = w.Y }).ToList(),
@@ -61,6 +64,16 @@ namespace OneMoreMove.Persistence
 
         private static GridPos ToPos(PosDto p) => new GridPos(p.X, p.Y);
 
+        private static IReadOnlyDictionary<string, LevelText> Translations(LevelDto dto) =>
+            dto.Translations?.Where(t => t.Value != null).ToDictionary(t => t.Key, t => new LevelText(t.Value.Name, t.Value.Tip));
+
+        [JsonObject(MemberSerialization.OptIn)]
+        private sealed class TextDto
+        {
+            [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)] public string Name;
+            [JsonProperty("tip", NullValueHandling = NullValueHandling.Ignore)] public string Tip;
+        }
+
         private static Direction ParseDirection(string value) =>
             Directions.TryParse(value, out var direction) ? direction : throw new FormatException($"Unknown solution command '{value}'.");
 
@@ -73,6 +86,9 @@ namespace OneMoreMove.Persistence
             [JsonProperty("rulesVersion")] public int RulesVersion = RulesEngine.Version;
             [JsonProperty("tutorial")] public bool Tutorial;
             [JsonProperty("tip", NullValueHandling = NullValueHandling.Ignore)] public string Tip;
+
+            /// <summary>Language code → name and tip, e.g. { "en": { "name": "Wall", "tip": "…" } }.</summary>
+            [JsonProperty("translations", NullValueHandling = NullValueHandling.Ignore)] public Dictionary<string, TextDto> Translations;
             [JsonProperty("map", NullValueHandling = NullValueHandling.Ignore)] public List<string> Map;
             [JsonProperty("width")] public int Width;
             [JsonProperty("height")] public int Height;

@@ -1,3 +1,4 @@
 { "id": "l16_gate_and_echo", "name": "Kapı ve Yankı", "revision": 1, "parMoves": 9,
   "tip": "Kapalı kapı yankıyı da durdurur. Bekleyerek kapıların zamanını ayarlayabilirsin.",
+  "translations": { "en": {"name": "Gate and Echo", "tip": "A closed gate stops the echo too. Waiting lets you time the gates."} },
   "map": ["PEG.#", ".#xo#", ".....", "..x..", "....."] }

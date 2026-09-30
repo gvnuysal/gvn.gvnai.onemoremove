@@ -1,3 +1,4 @@
 { "id": "l11_echo", "name": "Yankı", "revision": 1, "parMoves": 7,
   "tip": "Yankı her hamlede senin tam tersine gider. Hedefe yalnızca senin ulaşman gerekir.",
+  "translations": { "en": {"name": "Echo", "tip": "The echo always moves exactly opposite to you. Only you need to reach the goal."} },
   "map": [".....", "#.#..", "..P..", ".#E#.", ".#.G."] }

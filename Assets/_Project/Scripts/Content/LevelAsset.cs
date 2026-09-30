@@ -13,6 +13,17 @@ namespace OneMoreMove.Content
         public bool initiallyOpen;
     }
 
+    [Serializable]
+    public struct LevelTranslation
+    {
+        [Tooltip("Language code, e.g. \"en\".")]
+        public string language;
+
+        public string name;
+
+        [TextArea(1, 3)] public string tip;
+    }
+
     /// <summary>
     /// Designer-editable level data. The asset is never modified at runtime: gameplay works on the immutable
     /// <see cref="LevelDefinition"/> returned by <see cref="ToDefinition"/>.
@@ -28,6 +39,9 @@ namespace OneMoreMove.Content
 
         [Tooltip("Optional one-line teaching text shown in the HUD while this level is played.")]
         [SerializeField, TextArea(1, 3)] private string tip;
+
+        [Tooltip("Name and tip in other languages (the fields above are Turkish, the source language).")]
+        [SerializeField] private List<LevelTranslation> translations = new List<LevelTranslation>();
 
         [SerializeField, Range(1, LevelDefinition.MaxDimension)] private int width = 5;
         [SerializeField, Range(1, LevelDefinition.MaxDimension)] private int height = 5;
@@ -68,7 +82,10 @@ namespace OneMoreMove.Content
                 hasOptimalMoves ? optimalMoves : (int?)null,
                 knownSolution,
                 isTutorial,
-                tip);
+                tip,
+                translations.Where(t => !string.IsNullOrEmpty(t.language))
+                    .GroupBy(t => t.language)
+                    .ToDictionary(g => g.Key, g => new LevelText(g.First().name, g.First().tip)));
         }
 
         /// <summary>Overwrites every field from a definition (import, editor tools).</summary>
@@ -80,6 +97,9 @@ namespace OneMoreMove.Content
             rulesVersion = level.RulesVersion;
             isTutorial = level.IsTutorial;
             tip = level.Tip;
+            translations = level.Translations
+                .Select(t => new LevelTranslation { language = t.Key, name = t.Value.Name, tip = t.Value.Tip })
+                .ToList();
             width = level.Width;
             height = level.Height;
             walls = level.Walls.Select(ToVector).ToList();

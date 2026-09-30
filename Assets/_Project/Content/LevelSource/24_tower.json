@@ -1,2 +1,3 @@
 { "id": "l24_tower", "name": "Kule", "revision": 1, "parMoves": 23,
+  "translations": { "en": {"name": "Tower"} },
   "map": ["#.....#", "..#G#..", ".#.##.o", "#.#.#.#", "P...xE."] }

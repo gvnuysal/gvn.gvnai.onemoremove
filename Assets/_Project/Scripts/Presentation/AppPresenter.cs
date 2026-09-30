@@ -62,7 +62,9 @@ namespace OneMoreMove.Presentation
 
         public void Start()
         {
-            ApplyTextScale();
+            // Before any text is shown: the saved choice, or the device language.
+            Localization.Set(Localization.FromCode(_game.Settings.Language));
+            ApplyLanguage();
             _audio.SetVolumes(_game.Settings.SfxVolume, _game.Settings.MusicVolume);
             _audio.StartMusic();
             var message = Strings.LoadStatus(_game.LoadStatus) ?? Strings.ResumeDiscarded(_game.ResumeDiscardReason);
@@ -86,6 +88,7 @@ namespace OneMoreMove.Presentation
             _input.Hint -= OnHint;
             _input.Back -= OnBack;
             _gestures.Move -= OnMove;
+            Localization.Changed -= OnLanguageChanged;
         }
 
         private void Wire()
@@ -96,6 +99,7 @@ namespace OneMoreMove.Presentation
             _input.Hint += OnHint;
             _input.Back += OnBack;
             _gestures.Move += OnMove;
+            Localization.Changed += OnLanguageChanged;
 
             _mainMenu.ContinueClicked += () =>
             {
@@ -126,6 +130,11 @@ namespace OneMoreMove.Presentation
             };
             _win.LevelsClicked += ShowLevelSelect;
 
+            _settings.LanguageChanged += language =>
+            {
+                _game.UpdateSettings(s => s.Language = Localization.ToCode(language));
+                Localization.Set(language);
+            };
             _settings.ReducedMotionChanged += value => _game.UpdateSettings(s => s.ReducedMotion = value);
             _settings.MovePreviewChanged += value =>
             {
@@ -291,6 +300,21 @@ namespace OneMoreMove.Presentation
         {
             var session = _gameplay.Session;
             return _hud.IsVisible && session != null ? BoardDescriber.Describe(session.Level, session.State) : null;
+        }
+
+        private void ApplyLanguage()
+        {
+            UiTexts.Apply(_root);
+            _hud.ApplyLanguage();
+            ApplyTextScale();
+        }
+
+        private void OnLanguageChanged()
+        {
+            ApplyLanguage();
+            RefreshHud();
+            if (_settings.IsVisible) _settings.Bind(_game.Settings);
+            if (_levelSelect.IsVisible) ShowLevelSelect();
         }
 
         private void RefreshHud() => _hud.Refresh(_gameplay.Session, _game.CurrentIndex, _gameplay.IsHintPending);

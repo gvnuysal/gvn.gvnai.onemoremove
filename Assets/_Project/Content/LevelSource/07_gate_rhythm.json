@@ -1,3 +1,4 @@
 { "id": "l07_gate_rhythm", "name": "Kapı Ritmi", "revision": 2, "parMoves": 9,
   "tip": "Kapıya vardığında ne durumda olacağını düşün. Üstündeyken kapanan kapıdan yine de çıkabilirsin.",
+  "translations": { "en": {"name": "Gate Rhythm", "tip": "Think about the state a gate will be in when you arrive. You can still leave a gate that closes under you."} },
   "map": [".#.x.", "...#P", "Goo.x", ".#..#", "....."] }

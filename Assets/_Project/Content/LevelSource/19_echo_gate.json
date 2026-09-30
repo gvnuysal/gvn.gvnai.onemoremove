@@ -1,2 +1,3 @@
 { "id": "l19_echo_gate", "name": "Yankı Kapısı", "revision": 1, "parMoves": 14,
+  "translations": { "en": {"name": "Echo Gate"} },
   "map": [".ExxG", "#.#..", "x.#..", "#.P#.", "#.#.#"] }

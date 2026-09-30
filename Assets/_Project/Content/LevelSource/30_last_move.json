@@ -1,2 +1,3 @@
 { "id": "l30_last_move", "name": "Son Hamle", "revision": 1, "parMoves": 18,
+  "translations": { "en": {"name": "Last Move"} },
   "map": ["P#.#.", ".ox##", "#Ex#x", "#.#.G", "....#"] }

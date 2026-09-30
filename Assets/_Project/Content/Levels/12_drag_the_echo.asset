@@ -19,6 +19,11 @@ MonoBehaviour:
   isTutorial: 0
   tip: "Yank\u0131n\u0131n \xF6n\xFC kapal\u0131ysa yerinde kal\u0131r. Bunu onu
     istedi\u011Fin yere g\xF6t\xFCrmek i\xE7in kullan."
+  translations:
+  - language: en
+    name: Drag the Echo
+    tip: When the echo's way is blocked it stays put. Use this to take it where you
+      want.
   width: 5
   height: 5
   walls:
