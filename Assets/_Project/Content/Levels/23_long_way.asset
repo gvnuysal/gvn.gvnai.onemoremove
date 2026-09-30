@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1b90159842148ff9c88648978cdd10, type: 3}
+  m_Name: 23_long_way
+  m_EditorClassIdentifier: OneMoreMove.Content::OneMoreMove.Content.LevelAsset
+  id: l23_long_way
+  displayName: Uzun Yol
+  revision: 1
+  rulesVersion: 2
+  isTutorial: 0
+  tip: 
+  width: 7
+  height: 5
+  walls:
+  - {x: 3, y: 0}
+  - {x: 5, y: 0}
+  - {x: 1, y: 1}
+  - {x: 2, y: 1}
+  - {x: 3, y: 2}
+  - {x: 4, y: 2}
+  - {x: 5, y: 2}
+  - {x: 0, y: 3}
+  - {x: 1, y: 3}
+  - {x: 6, y: 3}
+  - {x: 6, y: 4}
+  gates:
+  - position: {x: 0, y: 0}
+    initiallyOpen: 1
+  - position: {x: 1, y: 0}
+    initiallyOpen: 1
+  - position: {x: 1, y: 2}
+    initiallyOpen: 0
+  - position: {x: 3, y: 4}
+    initiallyOpen: 0
+  playerStart: {x: 0, y: 2}
+  hasEcho: 1
+  echoStart: {x: 3, y: 3}
+  goal: {x: 2, y: 3}
+  parMoves: 20
+  hasOptimalMoves: 1
+  optimalMoves: 16
+  knownSolution: 04000000010000000100000003000000030000000000000000000000040000000100000004000000030000000200000002000000010000000100000002000000

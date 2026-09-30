@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f1b90159842148ff9c88648978cdd10, type: 3}
+  m_Name: 29_three_breaths
+  m_EditorClassIdentifier: OneMoreMove.Content::OneMoreMove.Content.LevelAsset
+  id: l29_three_breaths
+  displayName: "\xDC\xE7 Nefes"
+  revision: 1
+  rulesVersion: 2
+  isTutorial: 0
+  tip: 
+  width: 5
+  height: 5
+  walls:
+  - {x: 0, y: 0}
+  - {x: 2, y: 1}
+  - {x: 4, y: 1}
+  - {x: 1, y: 2}
+  - {x: 2, y: 2}
+  - {x: 1, y: 3}
+  - {x: 2, y: 3}
+  - {x: 3, y: 3}
+  - {x: 4, y: 3}
+  gates:
+  - position: {x: 1, y: 0}
+    initiallyOpen: 1
+  - position: {x: 1, y: 1}
+    initiallyOpen: 1
+  - position: {x: 0, y: 2}
+    initiallyOpen: 0
+  - position: {x: 3, y: 2}
+    initiallyOpen: 0
+  - position: {x: 4, y: 4}
+    initiallyOpen: 0
+  playerStart: {x: 0, y: 1}
+  hasEcho: 1
+  echoStart: {x: 3, y: 0}
+  goal: {x: 3, y: 1}
+  parMoves: 15
+  hasOptimalMoves: 1
+  optimalMoves: 12
+  knownSolution: 040000000200000002000000000000000400000000000000010000000400000000000000010000000100000002000000

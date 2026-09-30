@@ -16,8 +16,7 @@ namespace OneMoreMove.LevelLab
                    $"states={a.ReachableStates} dead={a.DeadEndRatio:0.00}{(a.Complete ? "" : " INCOMPLETE")}";
         }
 
-        /// <summary>House rule every shipped level followed before Wait existed: a quarter of the optimum as slack, rounded up.</summary>
-        public static int SuggestedPar(int optimal) => optimal + (optimal + 3) / 4;
+        public static int SuggestedPar(int optimal) => LevelAnalyzer.SuggestedPar(optimal);
 
         public static string Board(LevelDefinition level) => string.Join("\n", AsciiLevelParser.Render(level).Select(r => "    " + r));
 

@@ -69,6 +69,28 @@ namespace OneMoreMove.Core.Solving
     {
         public const int DefaultMaxStates = 2_000_000;
 
+        /// <summary>House rule for the 2-star target: a quarter of the optimum as slack, rounded up.</summary>
+        public static int SuggestedPar(int optimalMoves) => optimalMoves + (optimalMoves + 3) / 4;
+
+        /// <summary>
+        /// Content-plan rules a level should follow; each finding is a designer warning, never a release blocker.
+        /// </summary>
+        public static IReadOnlyList<string> DesignWarnings(LevelDefinition level, LevelAnalysis analysis)
+        {
+            var warnings = new List<string>();
+            if (!analysis.IsSolvable) return warnings;
+
+            var opt = analysis.OptimalMoves.Value;
+            if (level.ParMoves != SuggestedPar(opt)) warnings.Add($"Par {level.ParMoves} differs from the suggested {SuggestedPar(opt)}.");
+            if (level.IsTutorial) return warnings;
+
+            if (level.Gates.Count > 0 && analysis.OptimalWithoutGates == opt)
+                warnings.Add("Gates never cost a move (the optimum is the same with gates as floor).");
+            if (level.EchoStart.HasValue && analysis.OptimalWithoutEcho == opt && analysis.EchoBlocksInSolution == 0)
+                warnings.Add("The echo never matters (same optimum without it and it is never blocked).");
+            return warnings;
+        }
+
         public static LevelAnalysis Analyze(LevelDefinition level, int maxStates = DefaultMaxStates)
         {
             if (level == null) throw new ArgumentNullException(nameof(level));

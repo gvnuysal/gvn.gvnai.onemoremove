@@ -1,0 +1,2 @@
+{ "id": "l23_long_way", "name": "Uzun Yol", "revision": 1, "parMoves": 20,
+  "map": ["oo.#.#.", ".##....", "Px.###.", "##GE..#", "...x..#"] }

@@ -26,8 +26,19 @@ the plan fills up.
 | 18 | Gates + echo | Yankı Tuzağı (`18_echo_trap`): the echo costs nothing but punishes a wrong order | shipped | 9 / 12 |
 | 19 | Gates + echo | Yankı Kapısı (`19_echo_gate`): unsolvable if gates were floor; a closed gate must hold the echo | shipped | 11 / 14 |
 | 20 | Gates + echo | Bekçi (`20_the_warden`): the echo guards the goal; 3 moves without it, 14 with it | shipped | 14 / 18 |
-| 21–25 | Long plans | Same mechanics, new layouts | **to do** (phase 1c) | |
-| 26–30 | Mastery | Few moves, several plausible routes | **to do** (phase 1c) | |
+| 21 | Long plans | Kavşak (`21_crossroads`, 6×6): no waits; gates are essential | shipped | 13 / 17 |
+| 22 | Long plans | Dehliz (`22_corridor`, 7×5): three waits around the echo | shipped | 14 / 18 |
+| 23 | Long plans | Uzun Yol (`23_long_way`, 7×5): the echo costs 12 moves | shipped | 16 / 20 |
+| 24 | Long plans | Kule (`24_tower`, 7×5) | shipped | 18 / 23 |
+| 25 | Long plans | Dolambaçlı Yankı (`25_labyrinth`, 6×6): 14 echo blocks | shipped | 19 / 24 |
+| 26 | Mastery | Dar Geçit (`26_narrow_pass`) | shipped | 9 / 12 |
+| 27 | Mastery | Köşe Kapısı (`27_corner_gate`) | shipped | 10 / 13 |
+| 28 | Mastery | Tek Yol (`28_single_path`): 45 % of states are dead ends | shipped | 11 / 14 |
+| 29 | Mastery | Üç Nefes (`29_three_breaths`): three waits; gates and echo both cost | shipped | 12 / 15 |
+| 30 | Mastery | Son Hamle (`30_last_move`): unique solution, 45 % dead ends | shipped | 14 / 18 |
+
+All 30 levels have at most 2 optimal solutions from slot 21 on (mastery: exactly 1). The release gate
+(`CatalogValidator`) prints the same metrics as a difficulty report and warns when a level breaks the rules below.
 
 ## Design rules learned from LevelLab
 

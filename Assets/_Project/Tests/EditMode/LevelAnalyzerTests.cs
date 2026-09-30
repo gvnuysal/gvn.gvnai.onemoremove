@@ -44,6 +44,29 @@ namespace OneMoreMove.Tests
         }
 
         [Test]
+        public void SuggestedPar_AddsAQuarterRoundedUp()
+        {
+            Assert.That(LevelAnalyzer.SuggestedPar(2), Is.EqualTo(3));
+            Assert.That(LevelAnalyzer.SuggestedPar(4), Is.EqualTo(5));
+            Assert.That(LevelAnalyzer.SuggestedPar(7), Is.EqualTo(9));
+            Assert.That(LevelAnalyzer.SuggestedPar(12), Is.EqualTo(15));
+        }
+
+        [Test]
+        public void DesignWarnings_FlagDecorativeMechanicsAndOffPar()
+        {
+            // The gate is open on arrival anyway, so it never costs a move.
+            var decorative = AsciiLevelParser.Parse(new AsciiLevelParser.Options { ParMoves = 9 }, new[] { "P.x.G" });
+            var warnings = LevelAnalyzer.DesignWarnings(decorative, LevelAnalyzer.Analyze(decorative));
+
+            Assert.That(warnings, Has.Some.Contains("Gates never cost a move"));
+            Assert.That(warnings, Has.Some.Contains("Par 9 differs from the suggested 5"));
+
+            var needsWait = AsciiLevelParser.Parse(new AsciiLevelParser.Options { ParMoves = 4 }, new[] { "PxG" });
+            Assert.That(LevelAnalyzer.DesignWarnings(needsWait, LevelAnalyzer.Analyze(needsWait)), Is.Empty);
+        }
+
+        [Test]
         public void UnreachableGoal_IsUnsolvable()
         {
             var a = LevelAnalyzer.Analyze(TestLevels.Parse("P.#G"));

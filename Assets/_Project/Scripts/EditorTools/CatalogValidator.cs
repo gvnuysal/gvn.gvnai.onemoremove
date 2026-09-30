@@ -11,24 +11,31 @@ namespace OneMoreMove.EditorTools
 {
     public sealed class LevelCheck
     {
-        public LevelCheck(string levelId, IReadOnlyList<string> errors, IReadOnlyList<string> warnings, SolverResult solverResult)
+        public LevelCheck(string levelId, IReadOnlyList<string> errors, IReadOnlyList<string> warnings, SolverResult solverResult,
+            LevelAnalysis analysis = null)
         {
             LevelId = levelId;
             Errors = errors;
             Warnings = warnings;
             SolverResult = solverResult;
+            Analysis = analysis;
         }
 
         public string LevelId { get; }
         public IReadOnlyList<string> Errors { get; }
         public IReadOnlyList<string> Warnings { get; }
         public SolverResult SolverResult { get; }
+
+        /// <summary>Difficulty report (only for solvable levels).</summary>
+        public LevelAnalysis Analysis { get; }
+
         public bool Passed => Errors.Count == 0;
     }
 
     /// <summary>
     /// Release gate for content: structure, replay of the stored solution through the real rules, and a completed
     /// shortest-path search that confirms the stored optimum. Unsolved or unfinished searches block the release.
+    /// Solvable levels also get a difficulty report (<see cref="LevelAnalyzer"/>) and design warnings.
     /// </summary>
     public static class CatalogValidator
     {
@@ -68,7 +75,14 @@ namespace OneMoreMove.EditorTools
                     break;
             }
 
-            return new LevelCheck(level.Id, errors, warnings, solved);
+            LevelAnalysis analysis = null;
+            if (solved.Status == SolverStatus.Solved)
+            {
+                analysis = LevelAnalyzer.Analyze(level);
+                warnings.AddRange(LevelAnalyzer.DesignWarnings(level, analysis));
+            }
+
+            return new LevelCheck(level.Id, errors, warnings, solved, analysis);
         }
 
         public static IReadOnlyList<LevelCheck> Check(LevelCatalog catalog, out List<string> catalogErrors)
@@ -94,12 +108,20 @@ namespace OneMoreMove.EditorTools
             {
                 var solver = check.SolverResult != null ? $" | {check.SolverResult}" : string.Empty;
                 sb.AppendLine($"{(check.Passed ? "PASS" : "FAIL")} {check.LevelId}{solver}");
+                if (check.Analysis != null) sb.AppendLine("    difficulty: " + Describe(check.Analysis));
                 foreach (var e in check.Errors) sb.AppendLine($"    error: {e}");
                 foreach (var w in check.Warnings) sb.AppendLine($"    warning: {w}");
             }
 
             return sb.ToString();
         }
+
+        public static string Describe(LevelAnalysis a) =>
+            $"opt {a.OptimalMoves}, optimal solutions {a.OptimalSolutionCount}, waits {a.WaitsInSolution}, echo blocks {a.EchoBlocksInSolution}, " +
+            $"without wait {Optional(a.OptimalWithoutWait)}, without gates {Optional(a.OptimalWithoutGates)}, " +
+            $"without echo {Optional(a.OptimalWithoutEcho)}, states {a.ReachableStates}, dead ends {a.DeadEndRatio:P0}";
+
+        private static string Optional(int? value) => value?.ToString() ?? "-";
 
         [MenuItem("One More Move/Validate Level Catalog")]
         public static void ValidateFromMenu()
